@@ -21,6 +21,7 @@ Leader MUST invoke agents as **COMPLETE TEAMS**. NEVER spawn individual team mem
 | AI Pipeline | ai-model-specialist, ai-training-specialist, ai-result-analyst, image-quality-evaluator | Sequential |
 | **🔧 Tools Manager** *(runtime tool gap handler, cross-phase)* | **tools-manager-lead (Opus) → tools-manager-scout, tools-manager-builder, tools-manager-risk (ALL Opus)** | **via tools-manager-lead — leader spawns when sub-agent output contains `TOOL_REQUEST:` signal** |
 | **Delegation Advisor** *(default uncertainty handler, cross-phase)* | **delegation-advisor-lead (Opus) → delegation-advisor-fit, delegation-advisor-risk, delegation-advisor-alternative (ALL Sonnet)** | **via delegation-advisor-lead — leader uses ROUTINELY whenever the task does not match an obvious-match whitelist entry** |
+| **🛑 NoThinking (literal-execution)** *(user-invoked, cross-phase)* | **NoThinkingAgent (Sonnet) + NoThinkingAgent-monitor (Sonnet)** | **Leader spawns BOTH in parallel whenever user issues a literal-execution directive (see Obvious-Match Whitelist below). NEVER spawn NoThinkingAgent alone — monitor is mandatory 1:1 pair.** |
 
 ## Global Agents (always running)
 - requirements-guardian — MUST run in parallel during every Phase
@@ -47,6 +48,21 @@ license-advisor, doc-pre-scanner, project-scanner, feature-designer, doc-writer,
 - **Hard prohibitions**: this team NEVER performs the work itself, NEVER recommends "leader does it directly", NEVER recommends creating a new agent on the fly (except in 3rd-call escalation, which becomes a user-facing proposal).
 - **Per-task call budget**: 1st call → recommendation OR `BLOCKED` (with exactly 3 clarifying questions). 2nd call (after user clarification) → recommendation OR escalate. 3rd call forbidden — instead, recommend user define a new agent for this task type.
 - **Guardian exemption**: spawning the advisor team itself does NOT require requirements-guardian/subagent-monitor (it is meta-routing, not phase work). However, the team that the advisor recommends MUST follow normal guardian rules when spawned.
+
+### NoThinking Team (Literal-Execution Handler, Non-negotiable)
+- **Purpose**: 사용자가 "추론하지 말고 그대로 수행해", "NoThinkingAgent를 사용해", "문서 그대로", "있는 그대로 실행" 같은 **literal-execution 지시**를 내릴 때 사용하는 전용 팀. 리더·에이전트의 자의적 해석을 완전 차단하고 원문 그대로만 실행함.
+- **Members**: `NoThinkingAgent` (Sonnet, 실행 담당) + `NoThinkingAgent-monitor` (Sonnet, 감시 담당). **항상 1:1 쌍으로 운영**, 둘 중 하나만 스폰하는 것 금지.
+- **Spawn rule**: 트리거 신호 감지 즉시 두 에이전트를 **병렬로 동시 스폰**. 리더는 입력 원문(문서 경로 또는 지시문 텍스트)을 두 에이전트 모두에게 전달함.
+- **Work loop**:
+  1. NoThinkingAgent가 `docs/nothinking-input.md` / `docs/nothinking-checklist.md` / `docs/nothinking-execution-log.md` 생성
+  2. NoThinkingAgent-monitor가 6단계 검증(원문 보존, 체크리스트 충실도, 로그 일치, 파일 변경 일치, 창의 흔적 탐지, 개선 제안 탐지) 실행
+  3. monitor `PASS` → 리더가 사용자에게 완료 보고
+  4. monitor `FAIL` → 리더가 위반 리포트를 첨부해 NoThinkingAgent 재스폰 (최대 2회 재스폰 후에도 실패 시 사용자 에스컬레이션)
+- **Hard prohibitions**:
+  - 리더가 NoThinkingAgent 없이 "그대로 수행해" 지시를 직접 실행하는 것 금지 — 반드시 이 팀에 위임
+  - NoThinkingAgent 단독 스폰 금지 (monitor 없이 작업 결과 수용 금지)
+  - monitor의 `FAIL` 판정을 무시하고 사용자에게 완료 보고하는 것 금지
+- **Phase 파이프라인 우회**: 이 팀은 Phase 0~Deploy 파이프라인과 무관함. 사용자의 literal-execution 지시는 대개 "지금 당장 이 문서대로 해"라는 즉시 수행 요청이므로 Phase 게이트를 건너뛰어 실행함. 단, 사용자가 요구사항에 "Phase 0부터 돌려"라고 명시하면 그 지시를 그대로 따름.
 
 ### Obvious-Match Whitelist (DO NOT spawn delegation-advisor — spawn directly)
 
@@ -106,6 +122,10 @@ The leader spawns the matching team/agent/skill **directly** for these cases. Th
 | Weekly retrospective, sprint review | `Skill("retro")` |
 | Pattern learning across sessions | `Skill("learn")` |
 | Sub-agent output contains `TOOL_REQUEST:` signal | `tools-manager-lead` |
+| **"NoThinkingAgent를 사용해 수행해" / "NoThinkingAgent로 해줘"** | **Spawn `NoThinkingAgent` + `NoThinkingAgent-monitor` in parallel (both MANDATORY, 1:1 pair)** |
+| **"추론하지 말고 그대로 수행해" / "있는 그대로 해줘" / "그대로 실행해"** | **Spawn `NoThinkingAgent` + `NoThinkingAgent-monitor` in parallel** |
+| **"문서 그대로 구현해" / "요구사항 그대로 처리해" / "문자 그대로"** | **Spawn `NoThinkingAgent` + `NoThinkingAgent-monitor` in parallel** |
+| **"해석하지 말고" / "임의로 바꾸지 말고" / "literal execution"** | **Spawn `NoThinkingAgent` + `NoThinkingAgent-monitor` in parallel** |
 
 → **Anything NOT in this table = spawn `delegation-advisor-lead`**. The leader does not guess.
 
@@ -128,3 +148,4 @@ The leader spawns the matching team/agent/skill **directly** for these cases. Th
 9. **If guardian reports P0/P1 violations, the leader CANNOT proceed to the next Phase until those violations are resolved.**
 10. **Delegation Advisor team is the default uncertainty handler.** Spawn whenever the task does not match an entry in the expanded ~45-entry Obvious-Match Whitelist above. Cost is not a concern (~25s wall time). Use it freely — quality of delegation matters more than saving 4 model calls. The only thing the leader should NEVER do is guess or act directly.
 11. **Tools Manager is the runtime tool-gap handler.** When a sub-agent's output contains a `TOOL_REQUEST:` block and ends with `STATUS: BLOCKED_TOOL_REQUEST`, the leader MUST spawn `tools-manager-lead` immediately, NOT retry the sub-agent and NOT attempt the sub-agent's work directly. After the manager returns Mode A advice the leader re-spawns the original sub-agent with the advice included. After the manager returns a Mode B proposal the leader presents the proposal via AskUserQuestion; only on user approval does the leader re-spawn tools-manager-lead with `APPROVED` so it can execute file creation, then re-spawn the original sub-agent.
+12. **NoThinking team is the literal-execution handler.** 사용자가 "추론하지 말고 그대로 수행해", "NoThinkingAgent 사용해", "문서 그대로", "있는 그대로", "문자 그대로", "해석하지 말고" 등 literal-execution 지시를 내리면, 리더는 즉시 `NoThinkingAgent` + `NoThinkingAgent-monitor`를 **병렬로 동시 스폰**함. 두 에이전트는 반드시 1:1 쌍으로 운영되며, monitor 없이 NoThinkingAgent 단독 스폰 금지. monitor가 `PASS` 판정을 낼 때까지 리더는 사용자에게 완료 보고 불가. monitor `FAIL` 시 NoThinkingAgent를 재스폰(최대 2회), 그래도 실패하면 사용자 에스컬레이션. 이 팀을 건너뛰고 리더나 다른 에이전트가 "그대로 수행" 지시를 처리하는 것은 절대 금지.

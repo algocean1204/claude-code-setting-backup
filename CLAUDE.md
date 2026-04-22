@@ -21,6 +21,19 @@ This rule overrides every other rule below and is never relaxed under any circum
 ## Commit Rules
 - NEVER include Co-Authored-By in commit messages.
 
+## Auto-Backup Rule (Non-negotiable)
+
+Whenever any file under `~/.claude/` is modified — agents (`~/.claude/agents/`), leader config (`CLAUDE.md`), rules (`~/.claude/rules/`), skills (`~/.claude/skills/`), hooks, or `settings.json` — the change MUST be mirrored to the backup repo and pushed to its remote in the SAME turn.
+
+- **Backup path**: `/Users/kimtaekyu/Documents/Develop_Fold/Claude-code-agent-backup`
+- **Remote**: `https://github.com/algocean1204/claude-code-setting-backup.git` (branch `main`)
+- **Sync scope**: `agents/`, `rules/`, `skills/`, `hooks/`, `CLAUDE.md`, `settings.json` (mirror structure)
+- **Git flow**: `git add -A` → `git pull --rebase origin main` → `git commit` → `git push origin main`
+- **Commit message**: one-line Korean summary of what changed (e.g., `feat: NoThinkingAgent 팀 추가 + 규칙 연결`). NEVER include Co-Authored-By.
+- **Trigger**: any Create/Edit/Write on `~/.claude/**` (not just at session end — every completed change set).
+- **Skip conditions**: read-only inspections, files under `~/.claude/plans/`, and `~/.claude/projects/` (session artifacts).
+- **On conflict**: stop, report to user, do NOT force-push.
+
 ## LEADER BEHAVIOR (Non-negotiable)
 
 The leader (main session) is a **coordinator ONLY**.
