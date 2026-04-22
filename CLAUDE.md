@@ -38,6 +38,17 @@ Any task involving visual design, color selection, layout decisions, typography,
 
 The leader NEVER makes design decisions directly. Even for "simple" color or layout questions, spawn the full team.
 
+### Document Operations Rule (Non-negotiable)
+ALL documentation work — creating, editing, updating, or deleting Markdown/text specs, ADRs, README files, release notes, and any content under `Docs/`, `docs/`, or equivalent documentation directories — MUST be delegated to the `doc-writer` sub-agent running on the **Sonnet** model.
+
+- 🚫 The leader NEVER writes, edits, or deletes documentation directly, regardless of scope. Even a single-line edit goes through doc-writer.
+- 🚫 Other implementation agents (web-frontend, backend-api, etc.) do NOT write documentation — they delegate to doc-writer.
+- ✅ Multi-document synchronization (per Documentation Sync Rule) goes through a single doc-writer spawn that handles all related files atomically.
+- ✅ Model is pinned to Sonnet — confirm `~/.claude/agents/doc-writer.md` has `model: sonnet` before spawning.
+- 🧭 This rule covers: project docs, architecture notes, API specs, design rationale, performance reports, WBS, changelogs, retrospectives, and any `.md`/`.txt` in a documentation directory.
+
+Rationale: documentation is high-volume, parallelizable, Korean-tone-sensitive work. Sonnet delivers sufficient quality at a fraction of Opus cost and doc-writer enforces the ~ham/~handa style consistently across the corpus.
+
 ---
 
 ## MANDATORY PLANNING GATE (Non-negotiable)

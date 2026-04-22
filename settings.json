@@ -1,9 +1,44 @@
 {
+  "env": {
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
+  },
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["ClaudeTalkToFigma"],
+  "enabledMcpjsonServers": [
+    "ClaudeTalkToFigma"
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_TOOL_ARG_FILE_PATH\"; if echo \"$file\" | grep -q '.claude/rules/'; then echo \"[$(date '+%Y-%m-%d %H:%M')] $(basename \"$file\") — modified\" >> ~/.claude/rules/CHANGELOG.md; fi"
+          },
+          {
+            "type": "command",
+            "command": "/Users/kimtaekyu/.claude/hooks/backup-to-local.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/kimtaekyu/.claude/hooks/backup-to-github.sh"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "github@claude-plugins-official": false,
     "superpowers@claude-plugins-official": true,
@@ -27,29 +62,5 @@
   },
   "effortLevel": "high",
   "autoDreamEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "file=\"$CLAUDE_TOOL_ARG_FILE_PATH\"; if echo \"$file\" | grep -q '.claude/rules/'; then echo \"[$(date '+%Y-%m-%d %H:%M')] $(basename \"$file\") — modified\" >> ~/.claude/rules/CHANGELOG.md; fi"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "any-buddy apply --silent"
-          }
-        ]
-      }
-    ]
-  }
+  "skipDangerousModePermissionPrompt": true
 }

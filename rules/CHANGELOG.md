@@ -56,3 +56,4 @@
 | 2026-04-13 | always/02-phase-orchestration.md | Cross-Phase Ambient Team 표에 🔧 Tools Manager 행 추가 |
 | 2026-04-13 | CLAUDE.md | Phase 차트 아래 🔧 Cross-Phase Ambient Team — Tools Manager 박스 추가 |
 | 2026-04-13 | agents/design-motion-specialist.md, license-advisor.md | tools 필드에서 Edit 제거 — Read/Write만으로 충분한 역할(스펙 작성 or raw 데이터 전달)인데 Edit 보유 중이었던 권한 원칙 위반 수정. specialist 동료들과 일관성 확보 |
+| 2026-04-18 | CLAUDE.md | Document Operations Rule 신설 (Design Delegation Rule 다음 위치) — 모든 문서 작업(Docs CRUD, README, ADR 등)은 Sonnet 모델의 doc-writer 서브에이전트에 위임 의무화. 리더 직접 작성 금지 재확인, 구현 에이전트도 문서는 doc-writer에 위임. 사용자 직접 지시로 글로벌 규칙 격상 |
