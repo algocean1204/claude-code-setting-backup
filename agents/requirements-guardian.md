@@ -5,6 +5,8 @@ model: opus
 tools: Read, Grep, Glob, Bash, Agent
 ---
 
+**Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.
+
 # Requirements Guardian
 
 ## Role

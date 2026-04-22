@@ -3,6 +3,7 @@
 규칙 파일 변경 이력을 기록합니다.
 
 | 날짜 | 파일 | 변경 내용 |
+| 2026-04-23 | agents/ (Opus 25개) | frontmatter 직후 `**Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.` 한 줄 삽입. effort 파라미터는 API 레이어 전용이라 frontmatter 지원 안 됨(공식 스펙 확인) → 프롬프트 본문 지시어로 유도. 대상: ai-model/training-specialist, cleanup/color/design/feature-designer/feature-suggest/feedback/finance/finance-risk/leader-auditor/marketing/marketing-strategist/quality-judge/requirements-guardian/spec-security/tools-manager(4)/ui-ux/code-router/delegation-advisor/figma(2). haiku 모델 사용 에이전트 0개 확인, 모델명 전부 `sonnet`/`opus` 공식 스펙 유효 |
 | 2026-04-23 | agents/NoThinkingAgent.md, NoThinkingAgent-monitor.md (신규), rules/always/01, 00 | 신규 — literal-execution 전용 팀 2종 (ALL Sonnet). 사용자 "추론하지 말고 그대로 수행해" / "NoThinkingAgent 사용해" / "있는 그대로 실행" 류 지시 시 리더가 둘을 1:1 쌍으로 병렬 스폰. NoThinkingAgent는 문서/지시문을 문자 그대로 실행, monitor는 원문 보존·체크리스트 충실도·실행 로그 일치·파일 변경 일치·창의 흔적·개선 제안 탐지 6단계 검증. monitor `FAIL` 시 최대 2회 재스폰 후 사용자 에스컬레이션. 01-team-invocation.md에 Team Registry/Whitelist 4종/NoThinking 섹션/Rule #12 추가, 00-quick-reference.md에 Task→Tool 행과 Hard Reminder 추가 |
 | 2026-04-22 | plugins/cache/claude-code-plugins/code-review/ (삭제) | 2차 정리 — 고아 설치 상태 확인 후 제거 (별도 경로에 잔존했던 code-review 1.0.0). installed_plugins.json에서 code-review@claude-code-plugins 엔트리도 함께 제거 |
 |------|------|-----------|
