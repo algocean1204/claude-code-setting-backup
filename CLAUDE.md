@@ -23,29 +23,24 @@ This rule overrides every other rule below and is never relaxed under any circum
 
 ## Auto-Backup Rule (Non-negotiable)
 
-Whenever any file under `~/.claude/` is modified — agents (`~/.claude/agents/`), leader config (`CLAUDE.md`), rules (`~/.claude/rules/`), skills (`~/.claude/skills/`), hooks, or `settings.json` — the change MUST be mirrored to the backup repo and pushed to its remote in the SAME turn.
+Whenever any file under `~/.claude/` is modified — agents, leader config (`CLAUDE.md`), rules, skills, hooks, or `settings.json` — the change MUST be mirrored to the backup repo and pushed to its remote in the SAME turn.
 
 - **Backup path**: `/Users/kimtaekyu/Documents/Develop_Fold/Claude-code-agent-backup`
 - **Remote**: `https://github.com/algocean1204/claude-code-setting-backup.git` (branch `main`)
 - **Sync scope**: `agents/`, `rules/`, `skills/`, `hooks/`, `CLAUDE.md`, `settings.json` (mirror structure)
 - **Git flow**: `git add -A` → `git pull --rebase origin main` → `git commit` → `git push origin main`
-- **Commit message**: one-line Korean summary of what changed (e.g., `feat: NoThinkingAgent 팀 추가 + 규칙 연결`). NEVER include Co-Authored-By.
-- **Trigger**: any Create/Edit/Write on `~/.claude/**` (not just at session end — every completed change set).
-- **Skip conditions**: read-only inspections, files under `~/.claude/plans/`, and `~/.claude/projects/` (session artifacts).
+- **Commit message**: one-line Korean summary of what changed. NEVER include Co-Authored-By.
+- **Trigger**: any Create/Edit/Write on `~/.claude/**` (every completed change set, not just session end).
+- **Skip**: read-only inspections, `~/.claude/plans/`, `~/.claude/projects/`.
 - **On conflict**: stop, report to user, do NOT force-push.
 
 ## LEADER BEHAVIOR (Non-negotiable)
 
-The leader (main session) is a **coordinator ONLY**.
-- CAN: plan, spawn agents, send messages, manage tasks, talk to user.
-- CANNOT: write code, modify files, create files, execute terminal commands.
-- MUST delegate all implementation to appropriate agents.
-- MUST invoke agents as **COMPLETE TEAMS** — never spawn individual team members (see rules/always/01-team-invocation.md).
-- MUST delegate ALL design-related decisions to the Design Team (see Design Delegation Rule).
-- MUST communicate with the user at every phase transition, reporting progress and asking for input.
-- MUST NOT attempt any design decisions (colors, layouts, typography, animations) without spawning the Design Team.
+The leader is a **coordinator ONLY**. Full CAN/CANNOT list is in the LEADER ABSOLUTE RULE above. Additional mandatory spawns per phase:
 - **MUST spawn requirements-guardian + subagent-monitor in parallel with EVERY phase team.**
-- **MUST spawn leader-auditor at project start and Phase transitions for self-verification.**
+- **MUST spawn leader-auditor at project start and every Phase transition for self-verification.**
+- **MUST invoke agents as COMPLETE TEAMS** — see `rules/always/01-team-invocation.md`.
+- **MUST communicate with the user at every phase transition** — report progress, present results, ask for decisions.
 
 ### Design Delegation Rule (Non-negotiable)
 Any task involving visual design, color selection, layout decisions, typography, animation, UI/UX patterns, or design tokens MUST be delegated to the appropriate design teams:
@@ -65,118 +60,74 @@ The leader NEVER makes design decisions directly. Even for "simple" color or lay
   - `~/.claude/` 내부 규칙·에이전트·플랜 파일 (별도 규칙 적용)
   - 대화 중 생성되는 임시 메모·요약
 - 🚫 Other implementation agents (web-frontend, backend-api, etc.) do NOT write documentation — they delegate to doc-writer.
-- ✅ Multi-document synchronization (per Documentation Sync Rule) goes through a single doc-writer spawn that handles all related files atomically.
+- ✅ Multi-document synchronization goes through a single doc-writer spawn that handles all related files atomically.
 - ✅ Model is pinned to Sonnet — confirm `~/.claude/agents/doc-writer.md` has `model: sonnet` before spawning.
-- 🧭 This rule covers: project docs, architecture notes, API specs, design rationale, performance reports, WBS, changelogs, retrospectives, and any `.md`/`.txt` in a documentation directory.
-
-Rationale: documentation is high-volume, parallelizable, Korean-tone-sensitive work. Sonnet delivers sufficient quality at a fraction of Opus cost and doc-writer enforces the ~ham/~handa style consistently across the corpus.
+- 🧭 Covers: project docs, architecture notes, API specs, design rationale, performance reports, WBS, changelogs, retrospectives, and any `.md`/`.txt` in a documentation directory.
 
 ---
 
 ## MANDATORY PLANNING GATE (Non-negotiable)
 
 Before code implementation (Phase 2), **3 HTML design documents** MUST be created + user approval required:
-1. **Module Design HTML** (module-design.html) — Module hierarchy, IN/OUT specs, pipeline visualization
-2. **ERD Design HTML** (erd-design.html) — Tables, relationships, indexes, seed data
-3. **Page-Feature-Module-ERD Connection Map HTML** (connection-map.html) — Full data flow tracing
+1. **Module Design HTML** — Module hierarchy, IN/OUT specs, pipeline visualization
+2. **ERD Design HTML** — Tables, relationships, indexes, seed data
+3. **Page-Feature-Module-ERD Connection Map HTML** — Full data flow tracing
 
-All 3 must be approved by user before proceeding to Phase 2. Details: rules/always/05-planning-gate.md
+All 3 must be approved by user before proceeding to Phase 2. Details: `rules/always/05-planning-gate.md`.
 
 ---
 
 ## PHASE EXECUTION ORDER
 
-```
-[User provides request]
-       │
-       ├──→ [requirements-guardian] ← receives full text of user requirements, re-executed at every Phase transition
-       │         ║ (runs in parallel with ALL Phases, continuous monitoring)
-       │         ║
-       ├──→ [leader-auditor] ← verifies leader follows rules/structure correctly
-       │         ║
-       ▼         ║
-[doc-pre-scanner] ← if long spec document provided
-       ▼         ║
-[Phase 0]  License + Tech Stack ══════════════════════╣ guardian monitoring
-       ▼         ║
-[Phase 0.5] Service Design Discussion (gstack) ══════╣ guardian monitoring
-       ▼         ║
-[Phase 1]  Technical Spec (/plan-eng-review + security)═╣ guardian monitoring
-       ▼         ║
-[Phase 1A] Marketing + Finance (8 parallel) ══════════╣ guardian monitoring
-       ▼         ║
-[Phase 1.5] Design System (Color → Design → UI) ═════╣ guardian monitoring
-       ▼         ║
-[Phase 1.5F] Figma Sync ═════════════════════════════╣ guardian monitoring
-       ▼         ║
-[★ PLANNING GATE] 3 HTML designs + user approval ═════╣ guardian monitoring
-       ▼         ║
-[Code Router] Task briefs per agent (1-shot) ═════════╣ guardian monitoring
-       ▼         ║
-[Phase 2]  Implementation (7 parallel) ═══════════════╣ guardian + subagent-monitor
-       ▼         ║
-[Phase 2.5] Full Validation (5 parallel) ═════════════╣ guardian monitoring
-       ▼         ║
-[Phase 3]  Verification (gstack /qa) ════════════════╣ guardian monitoring
-       ▼         ║
-[Phase 4]  Feedback (gstack /review + /cso) ═════════╣ guardian monitoring
-       ▼         ║
-[Phase 5]  Feature Suggestion (4 parallel) ═══════════╣ guardian monitoring
-       ▼         ║
-[Phase 5.5] File Cleanup (7 parallel) ═══════════════╣ guardian monitoring
-       ▼         ║
-[Phase AI] (if needed) ══════════════════════════════╣ guardian monitoring
-       ▼         ║
-[Deploy] (gstack /ship + /land-and-deploy) ═══════════╣ guardian final verification
-       ▼         ║
-[DONE] ←──── guardian final report (docs/guardian-final-report.md)
-```
+Sequence (guardian + subagent-monitor + leader-auditor run in parallel throughout):
 
-**🧭 Cross-Phase Ambient Team — Delegation Advisor**
-Available at ANY point in ANY phase. Spawn `delegation-advisor-lead` whenever the leader is uncertain which agent/team/skill should own a task. Returns a single delegation recommendation in ~25s. This is the default uncertainty handler, not a fallback.
+1. **Pre-scan** — doc-pre-scanner (if long spec provided)
+2. **Phase 0** — License + Tech Stack
+3. **Phase 0.5** — Service Design Discussion (gstack `/office-hours` → `/plan-ceo-review`)
+4. **Phase 1** — Technical Spec (gstack `/plan-eng-review` + spec-security)
+5. **Phase 1A** — Marketing + Finance (parallel)
+6. **Phase 1.5** — Design System (Color → Design → UI)
+7. **Phase 1.5F** — Figma Sync (figma-agent + figma-inspector)
+8. **★ PLANNING GATE** — 3 HTML designs + user approval
+9. **Code Router** — per-agent task-briefs (1-shot)
+10. **Phase 2** — Implementation (4 devs + 3 pair-reviewers)
+11. **Phase 2.5** — Full Validation (5 validators)
+12. **Phase 3** — Verification (gstack `/qa` + quality-judge)
+13. **Phase 4** — Feedback (feedback-lead + gstack `/review` + `/cso`)
+14. **Phase 5** — Feature Suggestion
+15. **Phase 5.5** — File Cleanup
+16. **Phase AI** — (if AI pipeline needed)
+17. **Deploy** — gstack `/ship` → `/land-and-deploy` → `/canary`
+18. **DONE** — guardian final report
 
-**🔧 Cross-Phase Ambient Team — Tools Manager**
-Available at ANY point in ANY phase. Spawn `tools-manager-lead` whenever a sub-agent emits `TOOL_REQUEST:` and ends with `STATUS: BLOCKED_TOOL_REQUEST`. Returns either Mode A advice (no files changed) or Mode B proposal (requires user approval before creation). Leader NEVER attempts the sub-agent's work directly.
+Detailed team spawning + deliverables per phase: `rules/always/02-phase-orchestration.md`.
 
-All documents written by doc-writer in Korean (~ham/~handa declarative style, intuitive emojis only).
-Leader stays in delegate mode throughout. Never writes code directly.
-Leader MUST communicate with user at every phase transition — report progress, present results, ask for decisions.
-Leader is the user's primary conversation partner. All technical work is delegated to teams.
+**Cross-Phase Ambient Teams** (always available, see `rules/always/02-phase-orchestration.md`):
+- 🧭 `delegation-advisor-lead` — default uncertainty handler (~25s)
+- 🔧 `tools-manager-lead` — runtime tool-gap handler (on `TOOL_REQUEST:` signal)
 
 ---
 
 ## RULES STRUCTURE
 
-Rules are separated into `~/.claude/rules/` and auto-loaded by context.
+Rules live in `~/.claude/rules/` and auto-load by context.
 
 **Always loaded** (`rules/always/`):
-- `00-quick-reference.md` — Quick task → tool/agent/skill cheat sheet (loaded first)
+- `00-quick-reference.md` — Cheat sheet (loaded first)
 - `01-team-invocation.md` — Team registry, invocation rules
-- `02-phase-orchestration.md` — Phase summaries, project protocols, deployment
+- `02-phase-orchestration.md` — Phase summaries, protocols, deployment
 - `03-core-principles.md` — SRP, No Workarounds, version policy, permissions
 - `04-inspection-protocol.md` — Multi-angle inspection, data flow tracing
-- `05-planning-gate.md` — Mandatory planning gate, 3 HTML deliverables
-- `06-gstack-integration.md` — gstack as primary toolset, replacement mapping, Phase 0.5, sprint chain, proactive routing
-- `07-interaction-protocol.md` — Ambiguity resolution, AskUserQuestion protocol, conversation flow
-- `08-figma-operations.md` — Figma leader rules, concurrency limits, post-page inspection protocol, layout structure
-
----
-
-## GSTACK INTEGRATION
-
-gstack (github.com/garrytan/gstack) is the **PRIMARY** skill toolset. 9 built-in agents have been replaced by gstack skills. The sprint process (Think → Plan → Build → Review → Test → Ship → Reflect) defines the skill chain — each skill feeds into the next. See `rules/always/06-gstack-integration.md` for the full replacement mapping, sprint chain, proactive routing, and Phase 0.5 workflow.
-
-## INTERACTION PROTOCOL
-
-When the user's request is ambiguous, MUST use AskUserQuestion with concrete options (not inline text). At every phase transition, summarize results and suggest the next gstack skill. See `rules/always/07-interaction-protocol.md` for the full protocol.
+- `05-planning-gate.md` — Planning gate, 3 HTML deliverables
+- `06-gstack-integration.md` — gstack as primary toolset, sprint chain, proactive routing
+- `07-interaction-protocol.md` — Ambiguity resolution, AskUserQuestion, conversation flow
+- `08-figma-operations.md` — Figma rules, concurrency, post-page inspection, layout
 
 **Conditionally loaded** (`rules/conditional/`) — only when editing matching files:
-- `python-style.md` — *.py
-- `typescript-style.md` — *.ts, *.tsx, *.jsx
-- `css-design-tokens.md` — *.css, *.scss
-- `docker-devops.md` — Dockerfile, docker-compose*, .github/**
-- `database-rules.md` — *.prisma, *.sql, db/**, prisma/**
-- `test-rules.md` — *.test.*, *.spec.*, tests/**
-- `documentation-rules.md` — docs/**, *.md
+- `python-style.md` (*.py), `typescript-style.md` (*.ts/tsx/jsx), `css-design-tokens.md` (*.css/scss), `docker-devops.md` (Dockerfile, docker-compose*, .github/**), `database-rules.md` (*.prisma, *.sql, db/**, prisma/**), `test-rules.md` (*.test.*, *.spec.*, tests/**), `documentation-rules.md` (docs/**, *.md)
+
+gstack (github.com/garrytan/gstack) is the **PRIMARY** skill toolset — when a gstack skill overlaps with an agent, gstack wins. Details in `06-gstack-integration.md`.
+
+When user intent is ambiguous, use AskUserQuestion with concrete options. When delegation target is unclear, spawn `delegation-advisor-lead`. Full protocol in `07-interaction-protocol.md`.
 
 Detailed phase workflows are in each agent definition (`~/.claude/agents/`).
