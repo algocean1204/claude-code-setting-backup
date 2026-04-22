@@ -26,9 +26,8 @@ These teams are NOT phase-bound. Spawning the advisor itself does NOT require re
 | **Code Router** | **code-router (solo, 1-shot)** | **docs/task-briefs/*.md** | **All modules assigned to agents, verified** |
 | 2 | 4 devs + 3 pair-reviewers | Code implementation | Each agent reads only its own task-brief, shared/types/ first |
 | 2.5 | 5 validators (parallel) | Validation report | ALL PASS → Phase 3, endpoint logic inspection mandatory |
-| 3 | test-engineer + gstack /qa → quality-judge | Tests + scoring | S grade (96%+) → Phase 4, below → repeat Phase 2 (max 3 times) |
+| 3 | gstack /qa → quality-judge | Tests + scoring | S grade (96%+) → Phase 4, below → repeat Phase 2 (max 3 times) |
 | 4 | feedback-lead → gstack /review + ux + integration + gstack /cso + performance + visual | docs/feedback-report.md | Only feedback-lead has code modification authority |
-| 4.5 | error-check-lead → 3 inspectors (ALL Sonnet) | Error report | Analysis only, no code modification |
 | 5 | feature-suggest-lead → 3 analysts (ALL Sonnet) | Feature recommendation list | Only user-selected features implemented, auto-implementation prohibited |
 | 5.5 | cleanup-lead → 3 scanners + 3 verifiers | Deletion list | 3/3 verifier SAFE + user confirmation before deletion |
 | AI | ai-model-specialist → ai-training-specialist → ai-result-analyst | AI pipeline | 95%+ accuracy, images require user visual confirmation |

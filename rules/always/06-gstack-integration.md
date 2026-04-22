@@ -79,7 +79,7 @@ gstack (github.com/garrytan/gstack) is the **PRIMARY** skill toolset. When a gst
 ## Phase 3 — Verification (Updated)
 
 - `/qa` replaces `test-e2e-engineer` for browser-based E2E testing with real Chromium.
-- Verification team: **`test-engineer`, `/qa` (gstack), `quality-judge`**.
+- Verification team: **`/qa` (gstack), `quality-judge`**.
 - `/qa` tests in real browsers, identifies bugs, fixes atomically, re-verifies, and auto-generates regression tests.
 
 ---

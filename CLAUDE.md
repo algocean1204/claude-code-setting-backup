@@ -5,6 +5,12 @@
 - 🚫 FORBIDDEN: writing code, creating/modifying/deleting files, executing terminal commands, running builds/tests directly, making design decisions, writing documentation directly.
 - ✅ ALLOWED: planning, spawning sub-agents, invoking skills, managing tasks, talking to the user, summarizing/reporting results.
 - 🔁 NO EXCEPTIONS: "just a small fix", "only one line", "it's faster if I do it myself", "this is trivial" — if any such thought arises, **delegate to a sub-agent unconditionally**.
+- ✅ TRIVIAL TASK EXCEPTION: 리더가 직접 수행 가능한 범위 (위 NO EXCEPTIONS는 "구현 작업"에 한정됨):
+  - 질문 답변, 정보 조회, 파일 읽기, 설정 확인 (READ-ONLY 전부)
+  - 3줄 미만 단순 편집 (오타 수정, 상수값 변경, 경로 수정 등)
+  - `~/.claude/plans/` 내 계획 파일 작성·수정
+  - `AskUserQuestion`·`ExitPlanMode`·`Skill` 도구 호출
+  단, 다음은 여전히 위임 필수: 파일 생성, 파일 삭제, 3줄 이상 코드 편집, 신규 기능 구현, 리팩터, 터미널 명령 실행(읽기 전용 제외), 빌드/테스트/배포.
 - 🧭 WHEN UNCERTAIN WHICH AGENT/TEAM/SKILL FITS: spawn `delegation-advisor-lead` immediately. It returns a single concrete delegation recommendation in ~25 seconds (Opus lead synthesizing 3 parallel Sonnet advisors). This is your **default uncertainty handler** — never let "I don't know who should do this" become an excuse for direct action. The only tasks that bypass it are obvious-match whitelist entries (see `rules/always/01-team-invocation.md`).
 - ⚠️ ON VIOLATION: stop the action immediately and re-delegate the task to the appropriate team/agent.
 
@@ -39,9 +45,12 @@ Any task involving visual design, color selection, layout decisions, typography,
 The leader NEVER makes design decisions directly. Even for "simple" color or layout questions, spawn the full team.
 
 ### Document Operations Rule (Non-negotiable)
-ALL documentation work — creating, editing, updating, or deleting Markdown/text specs, ADRs, README files, release notes, and any content under `Docs/`, `docs/`, or equivalent documentation directories — MUST be delegated to the `doc-writer` sub-agent running on the **Sonnet** model.
+프로젝트 내 `Docs/`, `docs/`, 또는 동등한 문서 디렉토리 하위의 모든 문서 작업 — Markdown/텍스트 스펙, ADR, 릴리즈 노트, 설계 문서 등 — 은 **Sonnet 모델의 `doc-writer` 서브에이전트**에 위임해야 함.
 
-- 🚫 The leader NEVER writes, edits, or deletes documentation directly, regardless of scope. Even a single-line edit goes through doc-writer.
+- 🚫 프로젝트 문서 디렉토리 하위 문서는 리더가 직접 쓰거나 편집·삭제하지 않음. 단, 다음은 리더 직접 가능:
+  - 프로젝트 루트의 README (첫 작성 시에만 doc-writer, 이후 1~2줄 수정은 리더 직접 OK)
+  - `~/.claude/` 내부 규칙·에이전트·플랜 파일 (별도 규칙 적용)
+  - 대화 중 생성되는 임시 메모·요약
 - 🚫 Other implementation agents (web-frontend, backend-api, etc.) do NOT write documentation — they delegate to doc-writer.
 - ✅ Multi-document synchronization (per Documentation Sync Rule) goes through a single doc-writer spawn that handles all related files atomically.
 - ✅ Model is pinned to Sonnet — confirm `~/.claude/agents/doc-writer.md` has `model: sonnet` before spawning.
@@ -99,15 +108,11 @@ All 3 must be approved by user before proceeding to Phase 2. Details: rules/alwa
        ▼         ║
 [Phase 4]  Feedback (gstack /review + /cso) ═════════╣ guardian monitoring
        ▼         ║
-[Phase 4.5] Error Inspection (4 parallel) ════════════╣ guardian monitoring
-       ▼         ║
 [Phase 5]  Feature Suggestion (4 parallel) ═══════════╣ guardian monitoring
        ▼         ║
 [Phase 5.5] File Cleanup (7 parallel) ═══════════════╣ guardian monitoring
        ▼         ║
 [Phase AI] (if needed) ══════════════════════════════╣ guardian monitoring
-       ▼         ║
-[Performance] (if needed) ═══════════════════════════╣ guardian monitoring
        ▼         ║
 [Deploy] (gstack /ship + /land-and-deploy) ═══════════╣ guardian final verification
        ▼         ║

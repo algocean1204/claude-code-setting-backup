@@ -1,13 +1,11 @@
 {
   "env": {
-    "CLAUDE_CODE_EFFORT_LEVEL": "max",
-    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
   },
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
-  "enableAllProjectMcpServers": true,
+  "enableAllProjectMcpServers": false,
   "enabledMcpjsonServers": [
     "ClaudeTalkToFigma"
   ],
@@ -27,21 +25,10 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/kimtaekyu/.claude/hooks/backup-to-github.sh"
-          }
-        ]
-      }
-    ]
+    "Stop": []
   },
   "enabledPlugins": {
     "github@claude-plugins-official": false,
-    "superpowers@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "figma@claude-plugins-official": false,
@@ -53,14 +40,13 @@
     "jdtls-lsp@claude-plugins-official": true,
     "firebase@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "code-review@claude-code-plugins": true,
     "plugin-dev@claude-code-plugins": true,
     "security-guidance@claude-code-plugins": true,
     "pr-review-toolkit@claude-code-plugins": true,
     "plugin-dev@claude-plugins-official": true,
     "modular-architecture-design@local": true
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "autoDreamEnabled": true,
   "skipDangerousModePermissionPrompt": true
 }

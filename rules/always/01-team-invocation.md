@@ -14,9 +14,8 @@ Leader MUST invoke agents as **COMPLETE TEAMS**. NEVER spawn individual team mem
 | Design | design-lead → gstack /design-consultation, motion-specialist, gstack /design-review, ui-ux-designer | via design-lead |
 | Implementation | web-frontend, app-frontend, backend-api, backend-db (ALL Sonnet) + 3 pair-reviewers (ALL Sonnet) | Leader spawns 7 directly, ALL read task-briefs |
 | Full Validation | backend-validator, frontend-validator, frontend-build-checker, db-schema-validator, db-migration-auditor (ALL Sonnet) | Leader spawns 5 directly |
-| Verification | test-engineer, gstack /qa, quality-judge | Leader spawns agent + invokes skill |
+| Verification | gstack /qa, quality-judge | Leader invokes skill + spawns agent |
 | Feedback | feedback-lead → gstack /review, ux, integration, gstack /cso, performance, visual | via feedback-lead |
-| Error Inspection | error-check-lead → 3 inspectors (ui, api, structure) | ALL Sonnet |
 | Feature Suggestion | feature-suggest-lead → 3 analysts (consumer, ops, business) | ALL Sonnet |
 | File Cleanup | cleanup-lead → 3 scanners + 3 verifiers | via cleanup-lead |
 | AI Pipeline | ai-model-specialist, ai-training-specialist, ai-result-analyst, image-quality-evaluator | Sequential |
@@ -29,7 +28,7 @@ Leader MUST invoke agents as **COMPLETE TEAMS**. NEVER spawn individual team mem
 - leader-auditor — Verifies leader behavior at every Phase transition
 
 ## Solo Agents (spawned individually)
-license-advisor, doc-pre-scanner, project-scanner, feature-designer, doc-writer, devops-engineer, performance-optimizer, figma-agent, figma-inspector, code-router
+license-advisor, doc-pre-scanner, project-scanner, feature-designer, doc-writer, devops-engineer, figma-agent, figma-inspector, code-router
 
 ### Code Router (Non-negotiable)
 - **MUST** run after Planning Gate approval and before Phase 2
@@ -55,6 +54,11 @@ The leader spawns the matching team/agent/skill **directly** for these cases. Th
 
 | Trigger (user signal) | Direct spawn |
 |---|---|
+| Trivial Task: 질답, "이거 뭐야", "설정 확인", "파일 읽어줘" | Leader acts directly (READ-ONLY) |
+| Trivial Task: 1~2줄 단순 편집, 오타 수정 | Leader acts directly (≤3 lines, non-code files) |
+| Trivial Task: `~/.claude/plans/` 내 계획 수립 | Leader writes/edits plan file directly |
+| Trivial Task: Skill 도구로 정의된 슬래시 커맨드 호출 | Leader invokes Skill directly |
+| Trivial Task: 상태 조회, 진행 상황 요약 | Leader answers directly |
 | Color, palette, hex codes, brand colors | `color-lead` (full Color team) |
 | Visual design, layout, typography, animation, UI/UX patterns | `design-lead` (full Design team) |
 | Marketing, positioning, market research, growth, copy | `marketing-lead` (full Marketing team) |
@@ -78,7 +82,6 @@ The leader spawns the matching team/agent/skill **directly** for these cases. Th
 | Module design → per-agent task-briefs | `code-router` |
 | Figma sync (read or push designs) | `figma-agent` |
 | CI/CD, Docker, Nginx, infrastructure automation | `devops-engineer` |
-| Performance profiling and optimization (after benchmarks) | `performance-optimizer` |
 | Long spec document pre-scan | `doc-pre-scanner` |
 | CI/CD pipeline setup, GitHub Actions, build automation | `devops-engineer` |
 | Database query optimization, slow query analysis, index tuning | `backend-db` (if implementation) or `Skill("benchmark")` (if measurement) |
@@ -114,13 +117,13 @@ The leader spawns the matching team/agent/skill **directly** for these cases. Th
 5. **Removed agents** (replaced by gstack): spec-product, spec-architect, design-trend-researcher, design-critic, bug-detective, feedback-code-reviewer, feedback-security-reviewer, test-e2e-engineer, github-deployer.
 
 ## Rules
-1. **NEVER** spawn a single member from a team. Always spawn the FULL team.
+1. **NEVER** spawn a single member from a team. Always spawn the FULL team. *(Trivial Task 예외: 리더 직접 수행으로 팀 스폰 없이 완료. CLAUDE.md의 TRIVIAL TASK EXCEPTION 조항 참고)*
 2. Solo agents can be spawned individually.
 3. Team leaders are responsible for spawning their own sub-members.
 4. If a phase is skipped, that team is not spawned.
 5. **ONLY exception**: backend-only or frontend-only fix → spawn only relevant subset.
 6. Marketing + Finance teams MUST run in parallel during Phase 1A.
-7. Error Inspection + Feature Suggestion + File Cleanup run sequentially after Phase 4.
+7. Feature Suggestion + File Cleanup run sequentially after Phase 4.
 8. **requirements-guardian MUST run in parallel with the Phase team during every Phase.** Running a Phase without guardian is prohibited.
 9. **If guardian reports P0/P1 violations, the leader CANNOT proceed to the next Phase until those violations are resolved.**
 10. **Delegation Advisor team is the default uncertainty handler.** Spawn whenever the task does not match an entry in the expanded ~45-entry Obvious-Match Whitelist above. Cost is not a concern (~25s wall time). Use it freely — quality of delegation matters more than saving 4 model calls. The only thing the leader should NEVER do is guess or act directly.

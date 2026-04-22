@@ -1,6 +1,6 @@
 # MULTI-ANGLE ITERATIVE INSPECTION PROTOCOL (Non-negotiable)
 
-Applies to: Phase 2.5, Phase 3, Phase 4, Phase 4.5 — all phases involving inspection and fixing.
+Applies to: Phase 2.5, Phase 3, Phase 4 — all phases involving inspection and fixing.
 
 ## Iterative Cycle
 
@@ -30,7 +30,7 @@ Applies to: Phase 2.5, Phase 3, Phase 4, Phase 4.5 — all phases involving insp
 ```
 
 ## Inspection Lead Context Preservation
-Inspection leads (error-check-lead, feedback-lead, quality-judge, etc.) MUST hold the full inspection item list in context throughout the entire cycle:
+Inspection leads (feedback-lead, quality-judge, etc.) MUST hold the full inspection item list in context throughout the entire cycle:
 - Minimize context compression, keep original checklist intact
 - Do NOT summarize or abbreviate list mid-inspection
 - Only clear the list after full cycle complete + all issues resolved

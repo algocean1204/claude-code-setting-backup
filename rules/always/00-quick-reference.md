@@ -8,6 +8,20 @@
 2. **No exact match?** → Spawn `delegation-advisor-lead` (~25s, returns concrete recommendation). Never guess. Never act directly.
 3. **User intent unclear?** → `AskUserQuestion` with 2–4 concrete options. Never assume.
 
+## Zero Reflex — Trivial Task 먼저 판별
+
+Task → Tool 표를 보기 전에, **Trivial Task인지 먼저** 0.5초 판별함:
+
+| Trivial 패턴 | 리더 액션 |
+|---|---|
+| "이거 뭐야", "설명해줘", "어떻게 되는 거야" | 직접 답변, 팀 스폰 없음 |
+| "파일 읽어줘", "settings 확인" | Read 도구 직접 사용 |
+| "오타 고쳐줘", "1줄만 바꿔줘" (3줄 미만) | Edit 도구 직접 사용 |
+| "상태 알려줘", "진행 상황은?" | 이전 맥락 요약 직접 답변 |
+| "/~커맨드 실행" | Skill 도구 직접 호출 |
+
+→ Trivial Task가 **아니면** Task → Tool 표로 내려감. Trivial Task 판별 시 Three Reflexes 과정 생략 가능.
+
 ## Task → Tool Table (the only routing table you need at first glance)
 
 ### By Phase
@@ -23,9 +37,8 @@
 | Code Router (1-shot) | `code-router` |
 | Phase 2 (implementation) | `web-frontend` / `app-frontend` / `backend-api` / `backend-db` + 3 pair-reviewers |
 | Phase 2.5 (validation) | 5 validators (backend, frontend, build-checker, db-schema, db-migration) |
-| Phase 3 (verification) | `test-engineer` + `Skill("qa")` + `quality-judge` |
+| Phase 3 (verification) | `Skill("qa")` + `quality-judge` |
 | Phase 4 (feedback) | `feedback-lead` (with `/review`, `/cso`) |
-| Phase 4.5 (error inspection) | `error-check-lead` |
 | Phase 5 (feature suggest) | `feature-suggest-lead` |
 | Phase 5.5 (cleanup) | `cleanup-lead` |
 | AI Pipeline | `ai-model-specialist` → `ai-training-specialist` → `ai-result-analyst` |
@@ -51,7 +64,6 @@
 | Korean docs | "문서 작성", "README" | `doc-writer` |
 | Figma sync | "Figma", "design sync" | `figma-agent` |
 | CI/CD, infra | "GitHub Actions", "Docker", "deploy automation" | `devops-engineer` |
-| Performance profiling | "optimize", "profile", "bottleneck" | `performance-optimizer` |
 | Long spec doc | "this huge spec doc" | `doc-pre-scanner` |
 | Cross-model 2nd opinion | "another AI", "second opinion" | `Skill("codex")` |
 | Module → task-briefs | "split work between agents" | `code-router` |

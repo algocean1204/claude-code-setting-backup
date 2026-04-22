@@ -28,7 +28,7 @@ Step 0: Context anchoring (Non-negotiable)
 Step 1: Receive verification results
 - Read docs/quality-report.md and docs/test-report.md
 - Read all deducted items and warnings from quality-judge
-- Read all failed/flaky tests from test-engineer
+- Read all failed/flaky tests from gstack `/qa` output
 - Identify the gap between current score and 100%
 
 Step 2: Direct deep review

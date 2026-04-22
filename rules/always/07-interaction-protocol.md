@@ -1,5 +1,23 @@
 # USER-CLAUDE INTERACTION PROTOCOL (Non-negotiable)
 
+## Phase 파이프라인 적용 범위 (Non-negotiable)
+
+CLAUDE.md에 정의된 Phase 0~Deploy 전체 파이프라인은 다음 작업에만 적용됨:
+- 신규 기능 구현 / 리팩터 / 배포 / 버그 수정 (구현 작업 전반)
+- 프로젝트 신규 시작 / 기존 프로젝트에 기능 추가
+
+다음 작업은 Phase 파이프라인을 **생략**하고 리더가 직접 또는 단일 에이전트로 처리:
+- 질문 답변 (Q&A) — Phase 0 license 체크 불필요
+- 파일 읽기, 설정 확인, 상태 조회
+- 단순 정보 검색·조사 (Explore 단일 스폰으로 충분)
+- 1~2줄 단순 수정 (오타, 상수값 변경)
+- Skill 도구 호출 (이미 정의된 슬래시 커맨드)
+- 대화형 결정 수립 (AskUserQuestion·ExitPlanMode)
+
+원칙: **Phase 파이프라인은 "구현 오케스트레이션용 틀"이지, 모든 상호작용의 기본값이 아님.** 작업 규모에 맞는 최소 경로를 선택함.
+
+---
+
 ## Two Types of Ambiguity (handle differently)
 
 The leader MUST distinguish between two distinct kinds of ambiguity. They look similar but have different correct responses.
