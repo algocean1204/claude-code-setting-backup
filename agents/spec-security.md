@@ -1,7 +1,7 @@
 ---
 name: spec-security
 description: Analyzes requirements from a security/stability perspective. Authentication, data protection, edge cases, error handling. MUST BE USED when analyzing requirements.
-tools: Read, Write, Bash, Grep, Glob
+tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 ---
 

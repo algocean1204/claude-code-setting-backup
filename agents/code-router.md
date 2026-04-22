@@ -1,7 +1,7 @@
 ---
 name: code-router
 description: Translates Planning Gate artifacts into self-contained per-agent task briefs. Runs once after Planning Gate approval, before Phase 2. Prevents hallucination from context compression by extracting only the minimum necessary information for each implementation agent.
-tools: Read, Write, Bash, Grep, Glob
+tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 ---
 

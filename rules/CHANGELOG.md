@@ -3,6 +3,7 @@
 규칙 파일 변경 이력을 기록합니다.
 
 | 날짜 | 파일 | 변경 내용 |
+| 2026-04-22 | plugins/cache/claude-code-plugins/code-review/ (삭제) | 2차 정리 — 고아 설치 상태 확인 후 제거 (별도 경로에 잔존했던 code-review 1.0.0). installed_plugins.json에서 code-review@claude-code-plugins 엔트리도 함께 제거 |
 |------|------|-----------|
 | 2026-03-30 | (전체) | 초기 생성 — CLAUDE.md 701줄 → rules/ 구조로 개편 |
 | 2026-03-30 | always/01-team-invocation.md | 팀 레지스트리 + 호출 규칙 (CLAUDE.md에서 이동) |
@@ -61,3 +62,5 @@
 | 2026-04-22 | settings.json, hooks/ | env 플래그(EFFORT_LEVEL, DISABLE_ADAPTIVE_THINKING) 제거, PostToolUse hook 경로 필터 추가, Stop hook의 GitHub push 제거 후 launchd 하루 1회 전환. devops-engineer 서브에이전트가 병렬 수행 |
 | 2026-04-22 | agents/ (6개 삭제), plugins/ (2개 전체 삭제), rules/always/99-superpowers-extraction.md (신규) | 중복 감사 후 정리 — 에이전트: error-check 팀 4개 + test-engineer + performance-optimizer 제거 (gstack /qa, /benchmark, /investigate 스킬 및 feedback 팀과 역할 중복). 플러그인: superpowers 14 스킬 전체 + code-review:code-review 제거. superpowers 중 receiving-code-review, systematic-debugging 유일 가치 원칙만 99-superpowers-extraction.md로 보존. Phase 4.5 (Error Inspection), Performance 단계 Phase 차트에서 제거. db-pair-reviewer·db-migration-auditor는 사용자 "유지" 결정 및 흡수 검토 필요로 이번 제거에서 제외 |
 | 2026-04-22 | rules/always/01,04,06 | 1차 cleanup 패스가 놓친 stale 참조 4건 수정 (test-engineer, error-check-lead, Phase 4.5) |
+| 2026-04-22 | plugins/cache/claude-code-plugins/code-review/ 삭제 | 2차 cleanup 패스 — 1차 삭제는 claude-plugins-official/ 경로만 처리해 claude-code-plugins/ 경로에 20K(3 파일) 잔존본 존재. cleanup-lead 3/3 verifier SAFE 판정 후 삭제, backup은 plugins-backup-20260422/code-review-claude-code-plugins/ 보존, installed_plugins.json 엔트리 정리 |
+| 2026-04-22 | agents/ frontmatter 5건 | 심층 검증 후속 조치 — team lead 2건(cleanup-lead, feature-suggest-lead) sonnet→opus 승격(판단 품질 보장), 3건(code-router, design-motion-specialist, spec-security) tools에 Edit 추가(기존 스펙 편집 가능하도록) |

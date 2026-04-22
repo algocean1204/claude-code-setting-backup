@@ -1,7 +1,7 @@
 ---
 name: design-motion-specialist
 description: Animation and motion design expert. Creates animation specifications, timing functions, transition choreography, and micro-interaction designs. Translates trend research into concrete animation systems.
-tools: Read, Write, Bash, Grep, Glob
+tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 ---
 
