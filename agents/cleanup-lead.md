@@ -2,7 +2,7 @@
 name: cleanup-lead
 description: File cleanup team leader. Consolidates deletion candidates from 3 scanners, coordinates 3 verifiers for safety checks, and executes deletions only after user approval. The ONLY agent with deletion authority.
 tools: Read, Write, Edit, Bash, Grep, Glob, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

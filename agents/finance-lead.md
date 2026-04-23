@@ -2,7 +2,7 @@
 name: finance-lead
 description: Finance team leader. Coordinates 3 financial specialists to analyze cost structure, revenue model, and financial risks. Synthesizes findings into financial viability assessment.
 tools: Read, Write, Edit, Bash, Grep, Glob, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

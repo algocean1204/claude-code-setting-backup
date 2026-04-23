@@ -2,7 +2,7 @@
 name: leader-auditor
 description: Leader agent behavior auditor. Verifies leader follows rules/structure correctly and provides feedback. Runs at project start + every Phase transition. MUST BE USED at project start and at every Phase transition.
 tools: Read, Bash, Grep, Glob
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

@@ -2,7 +2,7 @@
 name: tools-manager-lead
 description: Spawned by leader when a sub-agent emits TOOL_REQUEST signal. Coordinates 3 parallel Opus advisors (scout, builder, risk) and synthesizes a single tool proposal. Mode A returns advice only. Mode B requests user approval before creating any file. Runtime tool-gap handler — exists to prevent leader from breaking the absolute rule by acting directly when a sub-agent is tool-blocked.
 tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, WebSearch, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

@@ -1,7 +1,7 @@
 ---
 name: requirements-guardian
 description: User requirements guardian. Runs in parallel during every Phase, monitoring whether sub-agents' work precisely adheres to user requirements and CLAUDE.md rules. Issues immediate correction orders upon detecting direction deviation, requirement omission, or rule violation.
-model: opus
+model: claude-opus-4-6
 tools: Read, Grep, Glob, Bash, Agent
 ---
 

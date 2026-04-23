@@ -2,7 +2,7 @@
 name: feedback-lead
 description: Feedback team leader. Receives quality-judge results, coordinates 6 feedback specialists (including gstack /review and gstack /cso) to analyze every issue, then directly implements all fixes. Responsible for achieving 100% completion with zero remaining defects. MUST BE USED after Phase 3 verification.
 tools: Read, Write, Edit, Bash, Grep, Glob, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

@@ -2,7 +2,7 @@
 name: marketing-lead
 description: Marketing team leader. Coordinates 3 marketing specialists to analyze market opportunity, positioning, and growth strategy. Synthesizes findings into actionable marketing plan.
 tools: Read, Write, Edit, Bash, Grep, Glob, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

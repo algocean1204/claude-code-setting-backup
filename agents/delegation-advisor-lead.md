@@ -2,7 +2,7 @@
 name: delegation-advisor-lead
 description: Default uncertainty handler. Spawned by the leader (main session) whenever a task does not match an obvious-match whitelist entry and the right agent/team/skill is unclear. Coordinates 3 parallel Sonnet advisors (fit, risk, alternative) and synthesizes their reports into a single concrete delegation recommendation in ~25 seconds. NEVER performs the work itself — output is always a delegation instruction the leader can hand off.
 tools: Read, Write, Edit, Bash, Grep, Glob, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

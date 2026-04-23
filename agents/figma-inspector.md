@@ -2,7 +2,7 @@
 name: figma-inspector
 description: Post-creation Figma quality inspector. Checks for vertical text, overlapping elements, layout compliance, and text readability. Read-only — no modifications. Spawned by leader after each page/screen creation.
 tools: Read, Bash, Grep, Glob, mcp__ClaudeTalkToFigma__join_channel, mcp__ClaudeTalkToFigma__get_document_info, mcp__ClaudeTalkToFigma__get_node_info, mcp__ClaudeTalkToFigma__get_nodes_info, mcp__ClaudeTalkToFigma__get_selection, mcp__ClaudeTalkToFigma__get_styles, mcp__ClaudeTalkToFigma__get_styled_text_segments, mcp__ClaudeTalkToFigma__get_image_from_node, mcp__ClaudeTalkToFigma__export_node_as_image
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

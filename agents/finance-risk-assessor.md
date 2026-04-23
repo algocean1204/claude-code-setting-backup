@@ -2,7 +2,7 @@
 name: finance-risk-assessor
 description: Financial risk assessment expert. Analyzes ROI, break-even points, financial risks, and scenario-based impact analysis.
 tools: Read, Bash, Grep, Glob, WebFetch
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

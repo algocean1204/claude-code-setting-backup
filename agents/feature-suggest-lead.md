@@ -2,7 +2,7 @@
 name: feature-suggest-lead
 description: Feature suggestion team leader. Consolidates recommendations from 3 analysts, creates prioritized feature list with justifications, and reports to leader for user selection.
 tools: Read, Write, Bash, Grep, Glob, Agent
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

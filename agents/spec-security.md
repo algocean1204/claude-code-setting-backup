@@ -2,7 +2,7 @@
 name: spec-security
 description: Analyzes requirements from a security/stability perspective. Authentication, data protection, edge cases, error handling. MUST BE USED when analyzing requirements.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.

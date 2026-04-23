@@ -2,7 +2,7 @@
 name: feature-designer
 description: Feature addition design expert for existing projects. Analyzes existing code architecture, patterns, and conventions to write consistent feature addition specs. MUST BE USED when adding features to existing projects.
 tools: Read, Write, Bash, Grep, Glob
-model: opus
+model: claude-opus-4-6
 ---
 
 **Reasoning mode**: Reason step-by-step before every decision — trace the full decision chain, verify each assumption, and proceed deliberately.
