@@ -18,6 +18,11 @@ This rule overrides every other rule below and is never relaxed under any circum
 
 ---
 
+## Leader Model (Non-negotiable)
+- 리더(메인 세션) 기본 모델: **Opus 4.6** — 공식 모델 ID `claude-opus-4-6`
+- `settings.json`의 `model` 필드에 `claude-opus-4-6`로 고정되어 있으며, Opus 4.7 자동 선택 방지를 위해 해제 금지
+- 변경이 필요할 경우 `update-config` 스킬을 통해서만 수정함
+
 ## Commit Rules
 - NEVER include Co-Authored-By in commit messages.
 
