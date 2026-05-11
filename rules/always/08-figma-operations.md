@@ -84,3 +84,13 @@ All Figma designs MUST follow this spatial arrangement:
 [Section - Search]
   Main(0,0)  FilterPanel(+1480,0)  Results(+2960,0)
 ```
+
+## Off-White Background Rule (Required)
+
+Pure white (#FFFFFF) is prohibited for backgrounds. Use one of:
+- `#F8F8F6` — warm neutral
+- `#FAFAF8` — soft warm white  
+- `#F8F9F6` — cool neutral
+- `#F3F0E9` — warm parchment
+
+figma-agent and design team agents must enforce this on all surfaces (frames, cards, modals, pages).

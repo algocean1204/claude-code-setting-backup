@@ -27,3 +27,13 @@ HSB curve: PRIMARY Hue fixed, lighter = lower S (1~2%), darker = higher S (8~12%
 - `!important`: prohibited
 - All colors must use design tokens / CSS variables (hardcoded hex prohibited)
 - Korean comments required
+
+## Off-White Background Rule (Required)
+- Pure white (#FFFFFF) backgrounds are prohibited
+- Use one of these off-white alternatives:
+  - `#F8F8F6` — warm neutral
+  - `#FAFAF8` — soft warm white
+  - `#F8F9F6` — cool neutral
+  - `#F3F0E9` — warm parchment
+- Selection criteria: warm UI → #F8F8F6 or #F3F0E9, cool/minimal UI → #FAFAF8 or #F8F9F6
+- Applies to: page backgrounds, card backgrounds, modal backgrounds, any surface that would default to white
