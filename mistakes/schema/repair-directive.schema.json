@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RepairDirective",
+  "type": "object",
+  "required": ["repair_id", "directive_id", "finding_id", "repair_type", "target_files", "write_scope", "risk_tier", "proposed_fix", "expected_verification", "rollback_plan", "auto_fix_allowed", "attempt_number", "status", "created_at"],
+  "properties": {
+    "repair_id": {
+      "type": "string",
+      "description": "수리 디렉티브 고유 UUID"
+    },
+    "directive_id": {
+      "type": "string",
+      "description": "원본 VerificationDirective 참조 ID"
+    },
+    "finding_id": {
+      "type": "string",
+      "description": "수정 대상 VerificationFinding 참조 ID"
+    },
+    "repair_type": {
+      "type": "string",
+      "enum": ["auto_fix", "manual_fix", "config_change", "rollback"],
+      "description": "수리 유형"
+    },
+    "target_files": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "수정 대상 파일 목록"
+    },
+    "write_scope": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "쓰기 허용 범위 (glob 패턴)"
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "위험 등급"
+    },
+    "proposed_fix": {
+      "type": "string",
+      "description": "제안 수정 내용 설명"
+    },
+    "expected_verification": {
+      "type": "string",
+      "description": "수정 후 예상 검증 명령"
+    },
+    "rollback_plan": {
+      "type": "string",
+      "description": "롤백 계획"
+    },
+    "auto_fix_allowed": {
+      "type": "boolean",
+      "description": "자동 수정 허용 여부"
+    },
+    "reason_if_not_auto_fixable": {
+      "type": ["string", "null"],
+      "description": "자동 수정 불가 사유 (선택)"
+    },
+    "attempt_number": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "description": "시도 횟수 (최대 3회)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "executed", "verified", "failed", "rolled_back"],
+      "description": "수리 디렉티브 현재 상태"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "수리 디렉티브 생성 시각"
+    }
+  }
+}

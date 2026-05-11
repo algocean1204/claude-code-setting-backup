@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerificationDirective",
+  "type": "object",
+  "required": ["directive_id", "goal_summary", "scope", "risk_tier", "verifier_chain", "changed_files", "max_runtime_sec", "created_at", "status", "session_id"],
+  "properties": {
+    "directive_id": {
+      "type": "string",
+      "description": "디렉티브 고유 UUID"
+    },
+    "goal_summary": {
+      "type": "string",
+      "description": "한 줄 목표 요약"
+    },
+    "scope": {
+      "type": "object",
+      "required": ["files_to_check", "test_commands", "acceptance_criteria"],
+      "properties": {
+        "files_to_check": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "검증 대상 파일 경로 목록"
+        },
+        "test_commands": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "실행할 테스트 명령어 목록"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "합격 조건 목록"
+        }
+      }
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "위험 등급"
+    },
+    "verifier_chain": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check_id", "check_type", "command"],
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "description": "체크 고유 ID"
+          },
+          "check_type": {
+            "type": "string",
+            "enum": ["syntax", "test", "lint", "runtime", "manual", "integration"],
+            "description": "체크 유형"
+          },
+          "command": {
+            "type": "string",
+            "description": "실행할 명령어"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {"type": "string"},
+            "default": [],
+            "description": "이 체크가 의존하는 check_id 목록 (DAG 구조)"
+          }
+        }
+      },
+      "description": "검증 체인 (DAG 구조)"
+    },
+    "changed_files": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "git diff에서 추출한 변경 파일 목록 (에이전트 주장이 아닌 시스템 출력)"
+    },
+    "max_runtime_sec": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 600,
+      "description": "최대 실행 시간 (초)"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "디렉티브 생성 시각"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "failed", "blocked"],
+      "description": "디렉티브 현재 상태"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "연관된 세션 ID"
+    },
+    "project_hash": {
+      "type": ["string", "null"],
+      "description": "프로젝트 해시 (선택)"
+    },
+    "agent": {
+      "type": ["string", "null"],
+      "description": "디렉티브 생성 에이전트 (선택)"
+    }
+  }
+}

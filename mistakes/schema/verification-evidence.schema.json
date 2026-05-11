@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerificationEvidence",
+  "type": "object",
+  "required": ["evidence_id", "directive_id", "check_id", "check_type", "executor", "raw_output", "raw_output_hash", "pass", "findings", "timestamp", "duration_ms"],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "description": "에비던스 고유 UUID"
+    },
+    "directive_id": {
+      "type": "string",
+      "description": "연결된 VerificationDirective ID"
+    },
+    "check_id": {
+      "type": "string",
+      "description": "verifier_chain 내 check_id 참조"
+    },
+    "check_type": {
+      "type": "string",
+      "enum": ["syntax", "test", "lint", "runtime", "manual", "integration"],
+      "description": "체크 유형"
+    },
+    "executor": {
+      "type": "string",
+      "enum": ["system", "model", "hybrid"],
+      "description": "실행 주체 (system=신뢰, model=불신, hybrid=부분 신뢰)"
+    },
+    "raw_output": {
+      "type": "string",
+      "description": "실행 원문 출력"
+    },
+    "raw_output_hash": {
+      "type": "string",
+      "description": "원문 출력의 SHA256 해시 (시스템 생성, 모델 생성 아님)"
+    },
+    "pass": {
+      "type": "boolean",
+      "description": "검증 통과 여부"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["finding_id", "description", "severity", "classification"],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "description": "발견 항목 고유 ID"
+          },
+          "description": {
+            "type": "string",
+            "description": "발견 항목 설명"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["P0", "P1", "P2"],
+            "description": "심각도 등급"
+          },
+          "classification": {
+            "type": "string",
+            "enum": ["AUTO_FIXABLE", "NEEDS_USER_DECISION", "UNSAFE_TO_FIX", "ENVIRONMENT_BLOCKED", "MODEL_LIMITATION"],
+            "description": "수정 가능 여부 분류"
+          },
+          "file": {
+            "type": ["string", "null"],
+            "description": "발견 위치 파일 경로 (선택)"
+          },
+          "line": {
+            "type": ["integer", "null"],
+            "description": "발견 위치 라인 번호 (선택)"
+          }
+        }
+      },
+      "description": "발견된 문제 목록"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "에비던스 수집 시각"
+    },
+    "duration_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "체크 실행 소요 시간 (밀리초)"
+    },
+    "confidence": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1,
+      "description": "검증 신뢰도 (선택, 0~1)"
+    }
+  }
+}
