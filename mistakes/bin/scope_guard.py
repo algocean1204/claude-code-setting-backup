@@ -36,8 +36,6 @@ def classify_scope(
         changes_architecture_boundary,
         touches_files_outside_directive_scope,
     ]
-    any_creep = any(creep_indicators)
-
     # IN_SCOPE_REFINEMENT: 긍정 조건 충족 + 모든 creep 지표 false
     if (
         positive

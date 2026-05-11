@@ -67,6 +67,10 @@ def validate_evidence(evidence: str, confidence_basis: str,
     # 5. 라인 범위 검사
     if line_start > line_end:
         violations.append(f"line_start({line_start}) > line_end({line_end}): 라인 범위 오류")
+    if line_start < 1:
+        violations.append(f"line_start({line_start}) < 1: 라인 번호는 1 이상이어야 합니다")
+    if line_end < 1:
+        violations.append(f"line_end({line_end}) < 1: 라인 번호는 1 이상이어야 합니다")
 
     return violations
 

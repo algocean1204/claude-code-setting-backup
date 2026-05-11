@@ -48,7 +48,6 @@
     "acceptance_criteria": {
       "type": "array",
       "items": { "type": "string" },
-      "minItems": 1,
       "description": "requirement_fidelity 검증 기준 목록"
     },
     "changed_files": {
