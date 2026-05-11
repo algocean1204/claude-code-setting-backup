@@ -1,0 +1,72 @@
+{
+  "rubric_id": "rubric-user-experience-v1",
+  "dimension": "user_experience",
+  "description": "사용자 경험 finding 생성 규칙",
+  "activation_condition": "UI, TUI, 데스크탑, CLI 흐름 변경을 포함하는 태스크",
+  "finding_rules": [
+    {
+      "rule_id": "ux-001",
+      "trigger": "1초 이상 걸릴 수 있는 비동기 작업에 로딩 상태 표시 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{async_operation}' 호출에 로딩 인디케이터 없음. 사용자가 작업 진행 여부를 알 수 없어 중복 클릭 또는 혼란 발생 가능.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-002",
+      "trigger": "오류 발생 시 사용자에게 오류 메시지나 피드백 없이 조용히 실패",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 catch 블록에서 '{error_type}' 처리 시 사용자에게 피드백 없음. 사용자가 오류 발생 여부를 알 수 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-003",
+      "trigger": "삭제, 초기화, 비가역적 작업 실행 전 확인 단계 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{destructive_action}' 실행 전 확인 다이얼로그 또는 --confirm 플래그 없음. 실수로 실행 시 복구 불가.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-004",
+      "trigger": "폼 제출 후 성공/실패 여부를 사용자에게 알리는 피드백 없음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 폼 '{form_id}' 제출 성공 후 결과 피드백 없음. 사용자가 제출 완료 여부를 확인할 수 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-005",
+      "trigger": "입력 유효성 오류 메시지가 어떤 필드가 잘못되었는지 명시하지 않음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 오류 메시지 '{error_message}'가 어느 필드 '{field_name}'의 무슨 문제인지 명시하지 않음. 사용자가 수정 방법을 알 수 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-006",
+      "trigger": "빈 상태(데이터 없음, 검색 결과 없음)에 안내 메시지 또는 액션 없음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{list_component}'가 빈 상태일 때 안내 없이 빈 화면만 표시. 사용자가 다음 행동을 알 수 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-007",
+      "trigger": "CLI 명령어에 --help 출력 없거나 필수 인수 오류 시 사용 예시 없음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 CLI 명령 '{command}'에 --help 플래그 처리 또는 인수 오류 시 usage 출력 없음. 사용자가 올바른 사용법을 알 수 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "ux-008",
+      "trigger": "긴 출력을 페이지네이션 없이 전체 출력해 TUI/CLI 터미널이 스크롤 불가 상태",
+      "severity": "P3",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{output_operation}'이 항목 수 제한 없이 전체 출력. 대량 결과 시 터미널 버퍼 초과 및 가독성 저하.",
+      "auto_repair_candidate": false
+    }
+  ]
+}

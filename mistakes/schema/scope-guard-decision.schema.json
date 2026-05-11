@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "scope-guard-decision.schema.json",
+  "title": "Scope Guard Decision",
+  "description": "수리 제안이 directive 범위를 벗어나는지 판별한 결정",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope_guard_id",
+    "repair_id",
+    "finding_id",
+    "changes_user_visible_behavior",
+    "adds_new_capability",
+    "changes_public_api_or_schema",
+    "changes_architecture_boundary",
+    "touches_files_outside_directive_scope",
+    "required_to_satisfy_acceptance_criteria",
+    "reduces_existing_risk_without_new_behavior",
+    "decision",
+    "reason",
+    "created_at"
+  ],
+  "properties": {
+    "scope_guard_id": {
+      "type": "string",
+      "pattern": "^sg-.+",
+      "description": "Scope guard decision 고유 식별자"
+    },
+    "repair_id": {
+      "type": "string",
+      "description": "평가 대상 수리 제안 식별자"
+    },
+    "finding_id": {
+      "type": "string",
+      "pattern": "^qf-.+",
+      "description": "수리 근거 quality-finding 참조"
+    },
+    "changes_user_visible_behavior": {
+      "type": "boolean",
+      "description": "사용자 체감 동작 변경 여부"
+    },
+    "adds_new_capability": {
+      "type": "boolean",
+      "description": "새 기능 추가 여부"
+    },
+    "changes_public_api_or_schema": {
+      "type": "boolean",
+      "description": "공개 API 또는 스키마 변경 여부"
+    },
+    "changes_architecture_boundary": {
+      "type": "boolean",
+      "description": "아키텍처 경계 변경 여부"
+    },
+    "touches_files_outside_directive_scope": {
+      "type": "boolean",
+      "description": "directive changed_files 외 파일 수정 여부"
+    },
+    "required_to_satisfy_acceptance_criteria": {
+      "type": "boolean",
+      "description": "인수 기준 충족에 필수 여부"
+    },
+    "reduces_existing_risk_without_new_behavior": {
+      "type": "boolean",
+      "description": "신규 동작 없이 기존 위험 감소 여부"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "in_scope_refinement",
+        "needs_user_approval",
+        "reject_scope_creep"
+      ],
+      "description": "범위 판별 결과: in_scope_refinement=즉시 적용 가능, needs_user_approval=사용자 승인 필요, reject_scope_creep=거부"
+    },
+    "reason": {
+      "type": "string",
+      "description": "판별 근거 설명"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "생성 시각 (ISO8601)"
+    }
+  }
+}

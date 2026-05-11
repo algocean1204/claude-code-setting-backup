@@ -1,0 +1,64 @@
+{
+  "rubric_id": "rubric-accessibility-v1",
+  "dimension": "accessibility",
+  "description": "접근성 finding 생성 규칙",
+  "activation_condition": "UI, TUI, 데스크탑, 웹 작업을 포함하는 태스크",
+  "finding_rules": [
+    {
+      "rule_id": "a11y-001",
+      "trigger": "<img> 요소에 alt 속성 없음 또는 alt='' (의미 있는 이미지인데 빈 alt)",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 <img src='{src}'>에 대체 텍스트 없음. 스크린리더가 이미지 내용 전달 불가. alt 속성 추가 필요.",
+      "auto_repair_candidate": true
+    },
+    {
+      "rule_id": "a11y-002",
+      "trigger": "상태, 오류, 중요 정보를 색상만으로 구분하고 텍스트/아이콘/패턴 보조 수단 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{component}'가 '{state}'를 색상만으로 구분. 색맹 사용자는 구분 불가. 텍스트 레이블 또는 아이콘 추가 필요.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "a11y-003",
+      "trigger": "클릭 가능한 요소에 keyboard 이벤트 핸들러(onKeyDown/onKeyPress/onKeyUp) 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{element}'에 onClick만 있고 keyboard 이벤트 없음. 키보드 전용 사용자가 해당 기능에 접근 불가.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "a11y-004",
+      "trigger": "interactive 요소(버튼, 링크, 폼 컨트롤)에 접근 가능한 이름(aria-label, aria-labelledby, 텍스트 콘텐츠) 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{element}'에 접근 가능한 이름 없음. 스크린리더가 요소 목적을 전달 불가.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "a11y-005",
+      "trigger": "텍스트와 배경 색상 대비 비율이 WCAG AA 기준(4.5:1, 대형 텍스트 3:1) 미달",
+      "severity": "P2",
+      "evidence_type": "measured_metric",
+      "finding_template": "{file_path}:{line_start}의 '{element}' 텍스트 색상 '{fg_color}'과 배경 '{bg_color}' 대비 비율={contrast_ratio}:1. WCAG AA 기준 {required_ratio}:1 미달.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "a11y-006",
+      "trigger": "모달/다이얼로그 열릴 때 focus가 모달 내부로 이동하지 않거나 ESC로 닫히지 않음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 모달 '{modal_id}'이 열릴 때 focus trap 없음. 키보드 사용자가 모달 외부 요소에 접근하거나 모달에 갇힐 수 있음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "a11y-007",
+      "trigger": "동적으로 변경되는 콘텐츠에 aria-live 또는 role='status' 없음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{element}'가 동적으로 업데이트되나 aria-live 없음. 스크린리더가 변경 사항을 알리지 못함.",
+      "auto_repair_candidate": true
+    }
+  ]
+}

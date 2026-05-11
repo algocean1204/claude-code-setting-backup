@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "quality-directive.schema.json",
+  "title": "Quality Directive",
+  "description": "Phase 3.6 품질 향상 루프의 지시 단위",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "quality_directive_id",
+    "verification_directive_id",
+    "task_id",
+    "risk_tier",
+    "task_profile",
+    "acceptance_criteria",
+    "changed_files",
+    "quality_dimensions",
+    "conditional_dimensions",
+    "rubric_refs",
+    "evidence_required",
+    "observe_only",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "quality_directive_id": {
+      "type": "string",
+      "pattern": "^qd-.+",
+      "description": "Quality directive 고유 식별자"
+    },
+    "verification_directive_id": {
+      "type": "string",
+      "pattern": "^vd-.+",
+      "description": "선행 Phase 3.5 verification directive 참조"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "작업 단위 식별자"
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "리스크 티어: 적용 차원 범위 결정"
+    },
+    "task_profile": {
+      "type": "string",
+      "description": "태스크 유형 설명 — 루브릭 선택 기준"
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "requirement_fidelity 검증 기준 목록"
+    },
+    "changed_files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "이 directive 범위 내 변경 파일 경로 목록"
+    },
+    "quality_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "requirement_fidelity",
+          "maintainability",
+          "robustness",
+          "security_safety",
+          "architecture_fit"
+        ]
+      },
+      "description": "활성화된 핵심 품질 차원"
+    },
+    "conditional_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "performance",
+          "test_quality",
+          "accessibility",
+          "user_experience",
+          "documentation"
+        ]
+      },
+      "description": "활성화 조건을 충족한 조건부 차원"
+    },
+    "rubric_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "적용할 루브릭 파일 경로 목록"
+    },
+    "evidence_required": {
+      "type": "boolean",
+      "default": true,
+      "description": "finding에 구체적 증거 필수 여부 (기본값 true)"
+    },
+    "observe_only": {
+      "type": "boolean",
+      "default": true,
+      "description": "관찰 전용 모드 — true이면 점수로 블로킹 불가"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "reviewing",
+        "findings_collected",
+        "dispositions_pending",
+        "complete",
+        "blocked"
+      ],
+      "description": "directive 처리 상태"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "생성 시각 (ISO8601)"
+    }
+  }
+}

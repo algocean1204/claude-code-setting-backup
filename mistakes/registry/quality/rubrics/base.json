@@ -1,0 +1,152 @@
+{
+  "rubric_id": "rubric-base-v1",
+  "dimension": "core",
+  "description": "5개 핵심 차원 finding 생성 규칙 — 모든 태스크에 적용",
+  "activation_condition": "always",
+  "finding_rules": [
+    {
+      "rule_id": "rf-001",
+      "dimension": "requirement_fidelity",
+      "trigger": "acceptance_criteria 항목 중 구현 코드에서 대응하는 함수/경로/처리 로직이 없는 경우",
+      "severity": "P0",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "acceptance_criteria '{criterion}'가 변경 파일 {file_path} 어디에도 구현되지 않음. 해당 기준을 처리하는 함수나 경로가 존재하지 않음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-002",
+      "dimension": "requirement_fidelity",
+      "trigger": "acceptance_criteria 항목이 부분 구현된 경우 — 일부 입력 케이스나 분기가 누락",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "acceptance_criteria '{criterion}'가 {file_path}:{line_start}에 부분 구현됨. {missing_case} 케이스 처리 로직 누락.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-003",
+      "dimension": "maintainability",
+      "trigger": "단일 함수 또는 메서드가 120줄을 초과",
+      "severity": "P1",
+      "evidence_type": "measured_metric",
+      "finding_template": "{file_path}:{line_start}의 함수 '{function_name}'이 {line_count}줄로 120줄 기준 초과. 단일 책임 위반 가능성.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-004",
+      "dimension": "maintainability",
+      "trigger": "파일 전체 줄 수가 200줄을 초과",
+      "severity": "P1",
+      "evidence_type": "measured_metric",
+      "finding_template": "{file_path}가 {line_count}줄로 200줄 파일 크기 제한 초과.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-005",
+      "dimension": "maintainability",
+      "trigger": "cyclomatic complexity가 15를 초과하는 함수",
+      "severity": "P2",
+      "evidence_type": "measured_metric",
+      "finding_template": "{file_path}:{line_start}의 '{function_name}' cyclomatic complexity={complexity_value}로 15 초과. 분기 경로 수가 과다해 테스트 및 이해가 어려움.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-006",
+      "dimension": "maintainability",
+      "trigger": "함수/변수 이름이 단일 문자, processData, handleAll, doStuff 등 의미 불명 패턴",
+      "severity": "P3",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 식별자 '{identifier}'가 의미 불명 명명 패턴. 코드 가독성 저하.",
+      "auto_repair_candidate": true
+    },
+    {
+      "rule_id": "rf-007",
+      "dimension": "robustness",
+      "trigger": "외부 API 호출, DB 쿼리, 파일 I/O 등 외부 리소스 접근에 예외 처리가 없는 경우",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 외부 호출 '{call_expression}'에 try/catch 또는 Result 타입 처리 없음. 예외 발생 시 미처리 전파.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-008",
+      "dimension": "robustness",
+      "trigger": "null/undefined 반환 가능 함수 결과를 null 체크 없이 사용",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}에서 nullable 반환값 '{expression}'을 null 체크 없이 프로퍼티 접근 또는 호출. NullPointerException/TypeError 위험.",
+      "auto_repair_candidate": true
+    },
+    {
+      "rule_id": "rf-009",
+      "dimension": "robustness",
+      "trigger": "정수 파싱, 배열 인덱스 접근 등 경계값 오류 가능 연산에 범위 검증 없음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{operation}'에 경계값 검증 없음. 유효 범위 외 입력 시 런타임 오류 가능.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-010",
+      "dimension": "security_safety",
+      "trigger": "사용자 입력을 검증 없이 SQL 쿼리, 시스템 명령, HTML 렌더링에 사용",
+      "severity": "P0",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}에서 사용자 입력 '{input_var}'이 {sink_type}에 검증 없이 삽입됨. SQL Injection / XSS / Command Injection 취약점.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-011",
+      "dimension": "security_safety",
+      "trigger": "비밀키, 토큰, 패스워드가 코드에 하드코딩된 경우",
+      "severity": "P0",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}에 시크릿 '{secret_pattern}'이 하드코딩됨. 버전 관리 시스템에 노출 위험.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-012",
+      "dimension": "security_safety",
+      "trigger": "인증 없이 민감 데이터 또는 관리 기능에 접근 가능한 엔드포인트",
+      "severity": "P0",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{endpoint}'에 인증 미들웨어 없음. 비인가 접근 가능.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-013",
+      "dimension": "security_safety",
+      "trigger": "민감 데이터(PII, 카드번호 등)가 로그에 평문 출력",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 로그 문장에 민감 필드 '{field_name}' 포함. 로그 저장소에 PII 유출 가능.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-014",
+      "dimension": "architecture_fit",
+      "trigger": "하위 레이어(예: repository)가 상위 레이어(예: controller)를 직접 import",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}에서 {lower_layer} 레이어가 {upper_layer} 레이어의 '{imported_module}'을 import. 레이어 의존성 방향 위반.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-015",
+      "dimension": "architecture_fit",
+      "trigger": "순환 import가 존재하는 모듈 쌍",
+      "severity": "P1",
+      "evidence_type": "tool_output",
+      "finding_template": "{module_a}와 {module_b} 사이 순환 의존성 검출. import 체인: {import_chain}",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "rf-016",
+      "dimension": "architecture_fit",
+      "trigger": "Feature 폴더 내 모듈이 core/ 인프라 모듈을 우회해 직접 DB/환경변수에 접근",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}에서 Feature 모듈이 core/ 경유 없이 {resource}에 직접 접근. 인프라 격리 위반.",
+      "auto_repair_candidate": false
+    }
+  ]
+}

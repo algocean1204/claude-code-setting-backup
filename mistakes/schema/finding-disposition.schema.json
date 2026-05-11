@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "finding-disposition.schema.json",
+  "title": "Finding Disposition",
+  "description": "quality-finding에 대한 처리 결정",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "disposition_id",
+    "finding_id",
+    "disposition",
+    "disposition_reason",
+    "disposition_evidence",
+    "decided_by",
+    "decided_at",
+    "requires_phase_3_5_reverification"
+  ],
+  "properties": {
+    "disposition_id": {
+      "type": "string",
+      "pattern": "^fd-.+",
+      "description": "Finding disposition 고유 식별자"
+    },
+    "finding_id": {
+      "type": "string",
+      "pattern": "^qf-.+",
+      "description": "처리 대상 quality-finding 참조"
+    },
+    "disposition": {
+      "type": "string",
+      "enum": ["upheld", "dismissed", "needs_user", "deferred"],
+      "description": "처리 결정: upheld=수리 권고, dismissed=기각, needs_user=사용자 결정 필요, deferred=이월"
+    },
+    "disposition_reason": {
+      "type": "string",
+      "minLength": 10,
+      "description": "처리 결정 이유 (최소 10자)"
+    },
+    "disposition_evidence": {
+      "type": "string",
+      "description": "dismissed 처리 시 기각 근거 — P0/P1 finding 기각 시 필수 (P2/P3 또는 비기각은 빈 문자열 허용)"
+    },
+    "decided_by": {
+      "type": "string",
+      "description": "결정 주체 (에이전트 ID 또는 'user')"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "결정 시각 (ISO8601)"
+    },
+    "requires_phase_3_5_reverification": {
+      "type": "boolean",
+      "description": "수리 후 Phase 3.5 재검증 필요 여부 — upheld + 수리 발생 시 true"
+    }
+  }
+}

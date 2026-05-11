@@ -1,0 +1,64 @@
+{
+  "rubric_id": "rubric-test-quality-v1",
+  "dimension": "test_quality",
+  "description": "테스트 품질 finding 생성 규칙",
+  "activation_condition": "동작 변경, 버그 수정, 리팩터 중 하나를 포함하는 태스크",
+  "finding_rules": [
+    {
+      "rule_id": "tq-001",
+      "trigger": "동작 변경이 있는 파일에 대응하는 테스트 파일 없음 또는 테스트가 변경되지 않음",
+      "severity": "P1",
+      "evidence_type": "artifact_reference",
+      "finding_template": "{file_path}의 동작이 변경되었으나 대응 테스트 파일 '{test_file}'이 없거나 수정되지 않음. 변경 동작에 대한 회귀 커버리지 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "tq-002",
+      "trigger": "테스트 케이스가 정상 경로(happy path)만 다루고 오류/경계값 케이스 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{test_file}:{line_start}의 '{test_suite}'가 정상 입력만 검증. 오류 입력, 빈 컬렉션, 경계값, null 케이스에 대한 테스트 없음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "tq-003",
+      "trigger": "외부 의존성을 mock으로 대체했으나 실제 계약(인터페이스)과 mock이 불일치",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{test_file}:{line_start}의 mock '{mock_name}'이 실제 '{real_dependency}'의 반환 타입/동작과 불일치. Mock이 실제 버그를 숨길 수 있음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "tq-004",
+      "trigger": "버그 수정에 해당 버그를 재현하는 회귀 테스트 없음",
+      "severity": "P1",
+      "evidence_type": "artifact_reference",
+      "finding_template": "버그 수정 커밋에 재현 테스트 없음. '{bug_description}' 버그가 재도입되어도 탐지 불가.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "tq-005",
+      "trigger": "테스트 어서션이 구현 내부 상태가 아닌 외부 동작을 검증하지 않음 — 화이트박스 과의존",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{test_file}:{line_start}의 어서션이 내부 구현 상세({internal_detail})에 의존. 리팩터 시 테스트가 깨지고 실제 동작 보호 안 됨.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "tq-006",
+      "trigger": "테스트가 파일 시스템, 실제 DB, 외부 네트워크에 직접 의존해 환경에 따라 결과 달라짐",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{test_file}:{line_start}의 테스트가 실제 {resource_type}에 직접 접근. 환경 의존으로 flaky 테스트 발생 가능. 격리된 fixture 또는 fake 사용 권장.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "tq-007",
+      "trigger": "setUp/tearDown 없이 테스트 간 공유 상태가 있어 실행 순서에 따라 결과 달라짐",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{test_file}:{line_start}에서 전역/모듈 상태 '{shared_state}'를 테스트 간 공유. 실행 순서 의존 발생.",
+      "auto_repair_candidate": false
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "rubric_id": "rubric-performance-v1",
+  "dimension": "performance",
+  "description": "성능 관련 finding 생성 규칙",
+  "activation_condition": "hot path 처리, 대규모 워크로드, 동시성 시스템, 리소스 제약 환경 중 하나에 해당하는 태스크",
+  "finding_rules": [
+    {
+      "rule_id": "perf-001",
+      "trigger": "반복문 내에서 반복 횟수에 비례해 DB 쿼리가 실행되는 N+1 패턴",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 루프에서 쿼리 '{query_call}'이 반복 호출됨. 입력 크기 N에 비례해 N+1 쿼리 발생. 배치 조회 또는 JOIN으로 대체 필요.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "perf-002",
+      "trigger": "컬렉션 크기 상한이 없는 반복문 — 입력 크기에 따라 무한 실행 가능",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 반복문에 크기 상한 없음. '{iterable}' 크기가 제한되지 않아 대용량 입력 시 타임아웃 또는 OOM 위험.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "perf-003",
+      "trigger": "대량 결과를 반환하는 DB 쿼리에 LIMIT/페이지네이션 없음",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 쿼리 '{query}'에 LIMIT 또는 커서 페이지네이션 없음. 테이블 전체를 메모리에 로드할 수 있음.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "perf-004",
+      "trigger": "반복적으로 동일 결과를 반환하는 외부 호출 또는 연산에 캐싱 없음",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 '{call_expression}'이 요청마다 반복 실행됨. 입력이 동일할 때 결과가 변하지 않는 경우 캐싱으로 호출 횟수 감소 가능.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "perf-005",
+      "trigger": "hot path 함수가 호출할 때마다 대용량 데이터 구조를 새로 할당",
+      "severity": "P2",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 hot path 함수 '{function_name}'에서 '{allocation_expression}' 매 호출마다 신규 할당. 객체 재사용 또는 풀링 검토 필요.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "perf-006",
+      "trigger": "인덱스 없는 컬럼으로 WHERE 절 필터링 — 쿼리 플랜에서 full scan 발생",
+      "severity": "P2",
+      "evidence_type": "artifact_reference",
+      "finding_template": "{file_path}:{line_start}의 쿼리가 '{column}'으로 필터링하나 해당 컬럼에 인덱스 없음. EXPLAIN 출력에 full scan 확인 시 인덱스 추가 필요.",
+      "auto_repair_candidate": false
+    },
+    {
+      "rule_id": "perf-007",
+      "trigger": "동기 블로킹 I/O가 async 함수 내에서 이벤트 루프를 점유",
+      "severity": "P1",
+      "evidence_type": "code_structure_analysis",
+      "finding_template": "{file_path}:{line_start}의 async 컨텍스트에서 동기 블로킹 호출 '{blocking_call}'. 이벤트 루프 점유로 다른 요청 처리 지연.",
+      "auto_repair_candidate": false
+    }
+  ]
+}

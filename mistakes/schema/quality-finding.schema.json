@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "quality-finding.schema.json",
+  "title": "Quality Finding",
+  "description": "Phase 3.6 루브릭 검사에서 발견된 품질 이슈",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "finding_id",
+    "quality_directive_id",
+    "dimension",
+    "severity",
+    "file_path",
+    "line_start",
+    "line_end",
+    "evidence",
+    "impact",
+    "proposed_repair",
+    "confidence_basis",
+    "auto_repair_candidate",
+    "created_by",
+    "created_at"
+  ],
+  "properties": {
+    "finding_id": {
+      "type": "string",
+      "pattern": "^qf-.+",
+      "description": "Quality finding 고유 식별자"
+    },
+    "quality_directive_id": {
+      "type": "string",
+      "pattern": "^qd-.+",
+      "description": "소속 quality directive 참조"
+    },
+    "dimension": {
+      "type": "string",
+      "enum": [
+        "requirement_fidelity",
+        "maintainability",
+        "robustness",
+        "security_safety",
+        "architecture_fit",
+        "performance",
+        "test_quality",
+        "accessibility",
+        "user_experience",
+        "documentation"
+      ],
+      "description": "이슈가 속한 품질 차원"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3"],
+      "description": "심각도: P0=즉시 수리 필요, P3=낮은 우선순위"
+    },
+    "file_path": {
+      "type": "string",
+      "description": "이슈가 발견된 파일 경로"
+    },
+    "line_start": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "이슈 시작 라인 번호"
+    },
+    "line_end": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "이슈 종료 라인 번호"
+    },
+    "evidence": {
+      "type": "string",
+      "minLength": 20,
+      "description": "구체적 증거 — 코드 라인/메트릭/도구 출력 참조 필수. 추정 불가"
+    },
+    "impact": {
+      "type": "string",
+      "description": "이슈가 시스템에 미치는 실질적 영향"
+    },
+    "proposed_repair": {
+      "type": "string",
+      "description": "수리 제안 — scope guard 통과 전 적용 불가"
+    },
+    "confidence_basis": {
+      "type": "string",
+      "enum": [
+        "measured_metric",
+        "tool_output",
+        "code_structure_analysis",
+        "test_result",
+        "artifact_reference"
+      ],
+      "description": "evidence 신뢰 근거 유형"
+    },
+    "auto_repair_candidate": {
+      "type": "boolean",
+      "description": "자동 수리 후보 여부 — scope guard 통과 필수"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "finding 생성 에이전트/도구 식별자"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "생성 시각 (ISO8601)"
+    }
+  }
+}
