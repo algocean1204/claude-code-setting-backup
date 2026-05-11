@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.hf_model_template",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "모델 저장소에 모델 추가 시 템플릿 확인 후 사용, 단점 위주 장단점 + 유사 모델 비교 필수",
+  "failure_mode": "모델 저장소(📚 지식베이스/AI 모델 쇼핑/모델 저장소.md)에 모델을 추가할 때, 반드시 📋 템플릿/HuggingFace 모델.md 템플릿을 먼저 확인하고 그 형식에 맞춰 작성한다.\n\n**Why:** 사용자가 모델 선택 시 단점을 빠르게 파악하고, 유사 모델과 비교해서 판단할 수 있어야 하기 때문. 장점만 적으면 실제 사용 시 뒤늦게 한계를 발견하게 됨.\n\n**How to apply:**\n- 모델 추가 요청 시 → 먼저 📋 템플릿/HuggingFace 모델.md 읽기 → 형식에 맞춰 작성\n- 장단점은 **단점 위주**로 작성 (장점은 간결하게, 단점은 구체적으로)\n- 유사 모델 최소 2개 이상 비교표 + 각각의 장단점 포함\n- HuggingFace에서 최신 유사 모델 검색 필수 (오래된 정보 방지)",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "모델 저장소(📚 지식베이스/AI 모델 쇼핑/모델 저장소.md)에 모델을 추가할 때, 반드시 📋 템플릿/HuggingFace 모델.md 템플릿을 먼저 확인하고 그 형식에 맞춰 작성한다.\n\n**Why:** 사용자가 모델 선택 시 단점을 빠르게 파악하고, 유사 모델과 비교해서 판단할 수 있어야 하기 때문. 장점만 적으면 실제 사용 시 뒤늦게 한계를 발견하게 됨.\n\n**How to apply:**\n- 모델 추가 요청 시 → 먼저 📋 템플릿/HuggingFace 모델.md 읽기 → 형식에 맞춰 작성\n- 장단점은 **단점 위주**로 작성 (장점은 간결하게, 단점은 구체적으로)\n- 유사 모델 최소 2개 이상 비교표 + 각각의 장단점 포함\n- HuggingFace에서 최신 유사 모델 검색 필수 (오래된 정보 방지)",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_hf_model_template.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

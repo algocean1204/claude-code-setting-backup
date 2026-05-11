@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.dashboard",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "대시보드.md 블록 배치 - 프로젝트 바로가기 최상단, 그 아래 퀵커맨드 → 클로드코드명령 순",
+  "failure_mode": "대시보드 블록 순서: 프로젝트 진입점이 최상단이고 그 아래로 사용 빈도 순.\n\n**Why:** 2026-04-14 사용자가 개인 프로젝트 체계 구축하면서 \"메인 대시보드 제일 위에 프로젝트 대시보드 바로가는 블럭\" 요청. 이전 2026-03-30 \"퀵커멘드 최상단\" 규칙을 덮어씀.\n**How to apply:** 대시보드 블록 순서를 건드릴 때 아래 기준 따를 것. 프로젝트 블록을 더 위로 올리려는 제안이나 퀵커멘드를 다시 최상단으로 올리려는 제안 금지.\n\n## 확정된 블록 순서 (2026-04-14 기준)\n\n1. 🚀 프로젝트 (최상단, `_프로젝트 대시보드`로 바로가기)\n2. ⚡ 퀵커멘드\n3. 🤖 클로드코드 명령\n4. 🗂️ 옵시디언 전체 목차\n5. 🔗 바로가기\n6. 🤗 HuggingFace 쇼핑\n7. 🔌 로컬 포트\n8. 취업 준비\n9. 💰 가계부\n10. 📁 메모 저장소\n11. 오늘의 코딩테스트\n12. 📂 코딩테스트 전체 목차\n13. 🚀 배포된 서비스",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "대시보드 블록 순서: 프로젝트 진입점이 최상단이고 그 아래로 사용 빈도 순.\n\n**Why:** 2026-04-14 사용자가 개인 프로젝트 체계 구축하면서 \"메인 대시보드 제일 위에 프로젝트 대시보드 바로가는 블럭\" 요청. 이전 2026-03-30 \"퀵커멘드 최상단\" 규칙을 덮어씀.\n**How to apply:** 대시보드 블록 순서를 건드릴 때 아래 기준 따를 것. 프로젝트 블록을 더 위로 올리려는 제안이나 퀵커멘드를 다시 최상단으로 올리려는 제안 금지.\n\n## 확정된 블록 순서 (2026-04-14 기준)\n\n1. 🚀 프로젝트 (최상단, `_프로젝트 대시보드`로 바로가기)\n2. ⚡ 퀵커멘드\n3. 🤖 클로드코드 명령\n4. 🗂️ 옵시디언 전체 목차\n5. 🔗 바로가기\n6. 🤗 HuggingFace 쇼핑\n7. 🔌 로컬 포트\n8. 취업 준비\n9. 💰 가계부\n10. 📁 메모 저장소\n11. 오늘의 코딩테스트\n12. 📂 코딩테스트 전체 목차\n13. 🚀 배포된 서비스",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_dashboard.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

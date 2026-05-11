@@ -1,0 +1,42 @@
+{
+  "id": "architecture.offwhite_background",
+  "category": "architecture",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "디자인 시 순백(#FFFFFF) 대신 4종 off-white 중 하나를 사용하는 필수 규칙",
+  "failure_mode": "순백(#FFFFFF) 배경 사용 금지 — 4종 off-white 대체 필수.\n\n선택지: #F8F8F6 (warm neutral), #FAFAF8 (soft warm white), #F8F9F6 (cool neutral), #F3F0E9 (warm parchment)\n\n**Why:** 사용자가 직접 지정한 디자인 원칙. 순백은 너무 차갑고 화면 피로를 유발한다는 판단.\n\n**How to apply:** 모든 디자인/CSS 작업에서 배경색이 white로 지정될 때 위 4색 중 하나로 교체. warm UI → #F8F8F6 또는 #F3F0E9, cool/minimal UI → #FAFAF8 또는 #F8F9F6. 규칙 파일: css-design-tokens.md, 08-figma-operations.md에 명시됨.",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "순백(#FFFFFF) 배경 사용 금지 — 4종 off-white 대체 필수.\n\n선택지: #F8F8F6 (warm neutral), #FAFAF8 (soft warm white), #F8F9F6 (cool neutral), #F3F0E9 (warm parchment)\n\n**Why:** 사용자가 직접 지정한 디자인 원칙. 순백은 너무 차갑고 화면 피로를 유발한다는 판단.\n\n**How to apply:** 모든 디자인/CSS 작업에서 배경색이 white로 지정될 때 위 4색 중 하나로 교체. warm UI → #F8F8F6 또는 #F3F0E9, cool/minimal UI → #FAFAF8 또는 #F8F9F6. 규칙 파일: css-design-tokens.md, 08-figma-operations.md에 명시됨.",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-Secret-Project-MacBot/memory/feedback_offwhite_background.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

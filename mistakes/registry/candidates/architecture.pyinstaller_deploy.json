@@ -1,0 +1,42 @@
+{
+  "id": "architecture.pyinstaller_deploy",
+  "category": "architecture",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "빌드 후 반드시 DMG 재생성 → 앱 재설치까지 완료. 실행 중 덮어쓰기 금지 (PYZ 손상). 직접 패치 금지.",
+  "failure_mode": "## 규칙 1: 실행 중 덮어쓰기 금지\n실행 중인 PyInstaller 앱의 `_internal/` 디렉터리에 새 빌드를 덮어쓰면 안 된다.\n\n**Why:** 3/31 세션에서 실행 중인 서버 위에 새 빌드를 복사했더니, EOD 시점에 미로드 모듈 import 시 `zlib.error: incomplete or truncated stream` 발생. PYZ 오프셋 불일치 때문.\n\n**How to apply:** 빌드 배포 절차는 항상: (1) 서버 프로세스 종료 확인 (2) 새 빌드 파일 복사 (3) codesign (4) 서버 재시작.\n\n## 규칙 2: 항상 정식 빌드 → DMG → 재설치\n코드 변경이나 코드 서명 수정 후, 설치된 앱을 직접 패치하지 않는다. 반드시 `scripts/build_dmg.sh` 로 DMG를 재생성하고, `/Applications/MyAPP/` 에 재설치까지 완료한다.\n\n**Why:** 4/4 세션에서 설치된 앱에 직접 바이너리를 복사/재서명하는 방식으",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "## 규칙 1: 실행 중 덮어쓰기 금지\n실행 중인 PyInstaller 앱의 `_internal/` 디렉터리에 새 빌드를 덮어쓰면 안 된다.\n\n**Why:** 3/31 세션에서 실행 중인 서버 위에 새 빌드를 복사했더니, EOD 시점에 미로드 모듈 import 시 `zlib.error: incomplete or truncated stream` 발생. PYZ 오프셋 불일치 때문.\n\n**How to apply:** 빌드 배포 절차는 항상: (1) 서버 프로세스 종료 확인 (2) 새 빌드 파일 복사 (3) codesign (4) 서버 재시작.\n\n## 규칙 2: 항상 정식 빌드 → DMG → 재설치\n코드 변경이나 코드 서명 수정 후, 설치된 앱을 직접 패치하지 않는다. 반드시 `scripts/build_dmg.sh` 로 DMG를 재생성하고, `/Applications/MyAPP/` 에 재설치까지 완료한다.\n\n**Why:** 4/4 세션에서 설치된 앱에 직접 바이너리를 복사/재서명하는 방식으",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-Secret-Project-Stock-Trading/memory/feedback_pyinstaller_deploy.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

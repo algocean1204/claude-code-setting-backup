@@ -1,0 +1,42 @@
+{
+  "id": "runtime_resource.pytest_resource_guard",
+  "category": "runtime_resource",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "pytest 실행 전 반드시 좀비/미아 프로세스 확인 + RAM/CPU 가용량 체크 필수, 무한 생성 금지",
+  "failure_mode": "pytest 실행 시 시스템 자원을 과하게 점유하여 시스템이 터진 사건 발생 (2026-04-28).\n\n**Why:** 서브에이전트가 pytest를 무한 생성하여 CPU와 RAM을 과점유, 시스템 크래시 유발.\n\n**How to apply:**\n- 테스트 실행 전 매번 좀비/미아 프로세스 확인 (`ps aux | grep pytest`, `ps aux | awk '$8 ~ /Z/'`)\n- 가용 RAM과 CPU 확인 (`top -l 1 -n 0 | head -12`)\n- RAM 가용량 10GB 미만이면 테스트 실행 보류\n- pytest 프로세스가 이미 3개 이상 존재하면 새로운 pytest 실행 금지\n- 병렬 테스트 실행 시 `-x` (fail-fast) 플래그 사용 권장\n- 테스트 완료 후 프로세스 정리 확인",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "pytest 실행 시 시스템 자원을 과하게 점유하여 시스템이 터진 사건 발생 (2026-04-28).\n\n**Why:** 서브에이전트가 pytest를 무한 생성하여 CPU와 RAM을 과점유, 시스템 크래시 유발.\n\n**How to apply:**\n- 테스트 실행 전 매번 좀비/미아 프로세스 확인 (`ps aux | grep pytest`, `ps aux | awk '$8 ~ /Z/'`)\n- 가용 RAM과 CPU 확인 (`top -l 1 -n 0 | head -12`)\n- RAM 가용량 10GB 미만이면 테스트 실행 보류\n- pytest 프로세스가 이미 3개 이상 존재하면 새로운 pytest 실행 금지\n- 병렬 테스트 실행 시 `-x` (fail-fast) 플래그 사용 권장\n- 테스트 완료 후 프로세스 정리 확인",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-Secret-Project-MacBot/memory/feedback_pytest_resource_guard.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

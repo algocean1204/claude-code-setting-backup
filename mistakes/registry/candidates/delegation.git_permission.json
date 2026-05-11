@@ -1,0 +1,42 @@
+{
+  "id": "delegation.git_permission",
+  "category": "delegation",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "SW_project 모든 레포에서 commit/pull/push/branch/PR/merge 는 사용자가 명시적으로 요청할 때만 수행. 자동 실행·선제 실행 금지.",
+  "failure_mode": "SW_project 모든 레포(Docs, backend-fastapi, frontend-web, infra)에서 git 쓰기 작업 — commit, push, pull, branch 생성, PR 생성, merge — 은 **사용자가 명시적으로 \"커밋해줘 / 푸쉬해줘 / 풀 해줘 / PR 올려줘\"라고 요청했을 때에만** 수행함.\n\n**Why:** 2026-04-22 사용자가 \"이제는 내가 깃허브 커밋,풀,푸쉬 하라 할때만 하는거야\"라고 지시함. 이전 세션에서 파일 작업 뒤에 devops 통해 자동 commit+PR+auto-merge 를 연속 실행해왔는데, 사용자는 git 타이밍을 직접 통제하고 싶어함. 작업 단위 완결성보다 사용자 주도 배포가 우선.\n\n**How to apply:**\n- 파일 작업(생성/수정/삭제) 완료 후 commit/push 로 바로 넘어가지 않음. 작업 완료 보고만 하고 대기.\n- `auto-merge 허용 레포(Docs·backend-fastapi·fronte",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "SW_project 모든 레포(Docs, backend-fastapi, frontend-web, infra)에서 git 쓰기 작업 — commit, push, pull, branch 생성, PR 생성, merge — 은 **사용자가 명시적으로 \"커밋해줘 / 푸쉬해줘 / 풀 해줘 / PR 올려줘\"라고 요청했을 때에만** 수행함.\n\n**Why:** 2026-04-22 사용자가 \"이제는 내가 깃허브 커밋,풀,푸쉬 하라 할때만 하는거야\"라고 지시함. 이전 세션에서 파일 작업 뒤에 devops 통해 자동 commit+PR+auto-merge 를 연속 실행해왔는데, 사용자는 git 타이밍을 직접 통제하고 싶어함. 작업 단위 완결성보다 사용자 주도 배포가 우선.\n\n**How to apply:**\n- 파일 작업(생성/수정/삭제) 완료 후 commit/push 로 바로 넘어가지 않음. 작업 완료 보고만 하고 대기.\n- `auto-merge 허용 레포(Docs·backend-fastapi·fronte",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-100-UnivVT-SW-project/memory/feedback_git_permission.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

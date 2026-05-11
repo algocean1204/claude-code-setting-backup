@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompiledRule",
+  "type": "object",
+  "required": ["pattern_id", "severity", "severity_rank", "action", "message", "scope", "signals"],
+  "properties": {
+    "pattern_id": {
+      "type": "string",
+      "description": "원본 패턴 ID 참조"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2"],
+      "description": "심각도 등급"
+    },
+    "severity_rank": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2,
+      "description": "심각도 정렬용 숫자 (P0=0, P1=1, P2=2)"
+    },
+    "action": {
+      "type": "string",
+      "enum": ["observe", "warn", "deny", "ask"],
+      "description": "매칭 시 수행할 액션"
+    },
+    "message": {
+      "type": "string",
+      "description": "매칭 시 출력할 메시지"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "surfaces": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "적용 대상 도구 표면 목록"
+        },
+        "file_patterns": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "적용 대상 파일 패턴 (glob)"
+        },
+        "phase": {
+          "type": ["string", "null"],
+          "description": "적용 대상 Phase (null이면 전체)"
+        }
+      }
+    },
+    "signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "operator", "value"],
+        "properties": {
+          "field": {"type": "string"},
+          "operator": {"type": "string", "enum": ["contains", "matches", "equals", "not_contains", "starts_with", "ends_with", "regex"]},
+          "value": {"type": "string"}
+        }
+      },
+      "description": "매칭 조건 시그널 목록"
+    }
+  }
+}

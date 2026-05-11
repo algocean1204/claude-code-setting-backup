@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MistakePattern",
+  "type": "object",
+  "required": ["id", "category", "severity", "status", "title", "failure_mode", "detection", "prevention", "solution", "stats", "promotion", "provenance"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "고유 패턴 ID (category.slug 형식)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "scope_control",
+        "verification",
+        "runtime_resource",
+        "architecture",
+        "code_quality",
+        "delegation",
+        "data_integrity",
+        "security",
+        "performance",
+        "ux_consistency"
+      ],
+      "description": "10가지 분류 체계 중 하나"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2"],
+      "description": "심각도 등급"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["candidate", "active", "retired"],
+      "description": "패턴 생명주기 상태"
+    },
+    "title": {
+      "type": "string",
+      "description": "패턴 제목 (한 줄 요약)"
+    },
+    "failure_mode": {
+      "type": "string",
+      "description": "이 실수가 발생하는 구체적 상황 설명"
+    },
+    "detection": {
+      "type": "object",
+      "required": ["surfaces", "signals", "signal_type", "precision", "cost"],
+      "properties": {
+        "surfaces": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["bash", "edit", "write", "agent", "context"]},
+          "description": "탐지 대상 도구 표면"
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["field", "operator", "value"],
+            "properties": {
+              "field": {"type": "string"},
+              "operator": {"type": "string", "enum": ["contains", "matches", "equals", "not_contains", "starts_with", "ends_with", "regex"]},
+              "value": {"type": "string"}
+            }
+          },
+          "description": "도구 입력에서 탐지할 시그널 조건 목록"
+        },
+        "signal_type": {
+          "type": "string",
+          "enum": ["deterministic", "heuristic", "pending_review"],
+          "description": "시그널 유형"
+        },
+        "precision": {
+          "type": ["string", "null"],
+          "description": "탐지 정밀도 (측정 전에는 unknown)"
+        },
+        "cost": {
+          "type": ["string", "null"],
+          "description": "탐지 비용 평가"
+        }
+      }
+    },
+    "prevention": {
+      "type": "object",
+      "required": ["action", "message"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["observe", "warn", "deny", "ask"],
+          "description": "탐지 시 수행할 액션"
+        },
+        "message": {
+          "type": "string",
+          "description": "사용자/에이전트에게 전달할 메시지"
+        }
+      }
+    },
+    "solution": {
+      "type": "object",
+      "required": ["canonical_fix", "verification"],
+      "properties": {
+        "canonical_fix": {
+          "type": "string",
+          "description": "정석 해결 방법"
+        },
+        "verification": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "수정 후 검증 단계 목록"
+        }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "required": ["occurrences_30d", "distinct_sessions_30d", "last_seen", "false_positive_rate", "escape_rate", "prevented_count"],
+      "properties": {
+        "occurrences_30d": {"type": "integer", "minimum": 0},
+        "distinct_sessions_30d": {"type": "integer", "minimum": 0},
+        "last_seen": {"type": ["string", "null"], "format": "date-time"},
+        "false_positive_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "escape_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "prevented_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "required": ["state", "target", "reason"],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["candidate", "active", "retired"],
+          "description": "현재 프로모션 상태"
+        },
+        "target": {
+          "type": "string",
+          "description": "목표 상태 또는 보류 사유"
+        },
+        "reason": {
+          "type": "string",
+          "description": "프로모션/강등 사유"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["created", "last_modified", "created_by"],
+      "properties": {
+        "original_memory": {
+          "type": "string",
+          "description": "원본 메모리 파일 경로 (import인 경우)"
+        },
+        "created": {"type": "string", "format": "date"},
+        "last_modified": {"type": "string", "format": "date"},
+        "created_by": {"type": "string"}
+      }
+    }
+  }
+}

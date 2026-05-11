@@ -1,0 +1,42 @@
+{
+  "id": "architecture.design_faithful",
+  "category": "architecture",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "레퍼런스 이미지 기반 디자인 재현 시 원본과 완전히 동일하게, 글자 세로·요소 겹침 금지",
+  "failure_mode": "사용자가 레퍼런스 이미지(스크린샷)를 제공하며 \"그대로 해줘\"라고 지시할 때, **창의적 해석 없이 원본을 그대로 재현**할 것. 특히 다음 실패 모드를 반드시 피해야 함:\n- **글자가 세로로 배치되는 현상** (auto-layout 미설정, 고정 폭 지정 시 발생)\n- **요소 간 겹침** (절대 좌표 계산 실수, z-index 충돌)\n- **레이아웃 드리프트** (임의 여백/비례 변경)\n\n**Why:** 2026-04-05 Figma `claude_page` 작업 중 tutorflow.io 스크린샷을 주면서 사용자가 명시함 — \"글자 세로로 되거나 요소 겹치지 않도록 주의해. 또 디자인 그대로 하도록 해야해.\" 이전 Figma 작업에서 글자 수직 배치/요소 겹침으로 재작업이 발생한 맥락.\n\n**How to apply:**\n- Figma 재현 작업 시작 전 프레임 크기/auto-layout 방향을 원본에 맞춰 먼저 세팅\n- 텍스트 노드는 `set_auto_layout`로 가로 방",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "사용자가 레퍼런스 이미지(스크린샷)를 제공하며 \"그대로 해줘\"라고 지시할 때, **창의적 해석 없이 원본을 그대로 재현**할 것. 특히 다음 실패 모드를 반드시 피해야 함:\n- **글자가 세로로 배치되는 현상** (auto-layout 미설정, 고정 폭 지정 시 발생)\n- **요소 간 겹침** (절대 좌표 계산 실수, z-index 충돌)\n- **레이아웃 드리프트** (임의 여백/비례 변경)\n\n**Why:** 2026-04-05 Figma `claude_page` 작업 중 tutorflow.io 스크린샷을 주면서 사용자가 명시함 — \"글자 세로로 되거나 요소 겹치지 않도록 주의해. 또 디자인 그대로 하도록 해야해.\" 이전 Figma 작업에서 글자 수직 배치/요소 겹침으로 재작업이 발생한 맥락.\n\n**How to apply:**\n- Figma 재현 작업 시작 전 프레임 크기/auto-layout 방향을 원본에 맞춰 먼저 세팅\n- 텍스트 노드는 `set_auto_layout`로 가로 방",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu/memory/feedback_design_faithful.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "delegation.subagent_mcp_binding",
+  "category": "delegation",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "Claude Code 서브에이전트는 frontmatter tools 필드에 MCP 툴을 명시해야만 호출 가능",
+  "failure_mode": "Claude Code 서브에이전트(Task/Agent tool로 spawn)는 `tools:` frontmatter에 명시된 툴만 호출할 수 있다. MCP 툴도 예외 없이 `mcp__ServerName__toolName` 형식으로 allowlist에 넣어야 한다. `tools:` 전체 생략 시에만 부모 권한 전부 상속.\n\n**Why:** 2026-04-13 figma-agent가 BLOCKED된 사건. 에이전트 본문엔 `join_channel`/`create_frame` 등 MCP 호출이 문서화돼 있었으나 `tools: Read, Write, Edit, Bash, Grep, Glob`로만 선언돼 있어 실제로는 호출 불가. 이로 인해 리더가 MCP를 직접 호출하는 LEADER ABSOLUTE RULE 위반 발생. \"MCP는 리더에서만 가능한 환경 제약\"은 오해였음 — 단순 frontmatter 누락이 원인.\n\n**How to apply:**\n- 새 에이전트 작성 시 본문에 MCP 호출",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "Claude Code 서브에이전트(Task/Agent tool로 spawn)는 `tools:` frontmatter에 명시된 툴만 호출할 수 있다. MCP 툴도 예외 없이 `mcp__ServerName__toolName` 형식으로 allowlist에 넣어야 한다. `tools:` 전체 생략 시에만 부모 권한 전부 상속.\n\n**Why:** 2026-04-13 figma-agent가 BLOCKED된 사건. 에이전트 본문엔 `join_channel`/`create_frame` 등 MCP 호출이 문서화돼 있었으나 `tools: Read, Write, Edit, Bash, Grep, Glob`로만 선언돼 있어 실제로는 호출 불가. 이로 인해 리더가 MCP를 직접 호출하는 LEADER ABSOLUTE RULE 위반 발생. \"MCP는 리더에서만 가능한 환경 제약\"은 오해였음 — 단순 frontmatter 누락이 원인.\n\n**How to apply:**\n- 새 에이전트 작성 시 본문에 MCP 호출",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu/memory/feedback_subagent_mcp_binding.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

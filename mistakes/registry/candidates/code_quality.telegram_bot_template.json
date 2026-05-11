@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.telegram_bot_template",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "봇 토큰/Chat ID 관련 노트 작성·수정 시 반드시 `📋 템플릿/텔레그램 봇 토큰.md` 템플릿 구조 따를 것",
+  "failure_mode": "텔레그램 봇 토큰 및 Chat ID를 Vault에 기록할 때는 항상 `📋 템플릿/텔레그램 봇 토큰.md` 템플릿 구조를 따른다. 새 봇을 추가할 때도 기존 섹션과 동일한 필드(봇 표시 이름 / username·t.me 링크 / Bot Token 코드블록 / Chat ID / 비고) 형식을 유지한다.\n\n**Why:** 봇이 늘어날 때 포맷이 제각각이면 대시보드 임베드에서 가독성이 깨지고, 토큰 노출 경고 문구도 누락될 위험이 있음. 사용자가 템플릿 일관성을 중시함(feedback_template_check.md, feedback_vault_convention.md).\n\n**How to apply:**\n- 봇 토큰 관련 노트 생성/수정 요청 시 먼저 `📋 템플릿/텔레그램 봇 토큰.md`를 읽고 구조 준수\n- 실제 저장 파일은 `🙋 개인정리/메모/텔레그램 봇 토큰.md` (대시보드에서 `![[텔레그램 봇 토큰]]`로 임베드 중)\n- 새 봇 추가 시 기존 파일에 섹션만 append, 구조 ",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "텔레그램 봇 토큰 및 Chat ID를 Vault에 기록할 때는 항상 `📋 템플릿/텔레그램 봇 토큰.md` 템플릿 구조를 따른다. 새 봇을 추가할 때도 기존 섹션과 동일한 필드(봇 표시 이름 / username·t.me 링크 / Bot Token 코드블록 / Chat ID / 비고) 형식을 유지한다.\n\n**Why:** 봇이 늘어날 때 포맷이 제각각이면 대시보드 임베드에서 가독성이 깨지고, 토큰 노출 경고 문구도 누락될 위험이 있음. 사용자가 템플릿 일관성을 중시함(feedback_template_check.md, feedback_vault_convention.md).\n\n**How to apply:**\n- 봇 토큰 관련 노트 생성/수정 요청 시 먼저 `📋 템플릿/텔레그램 봇 토큰.md`를 읽고 구조 준수\n- 실제 저장 파일은 `🙋 개인정리/메모/텔레그램 봇 토큰.md` (대시보드에서 `![[텔레그램 봇 토큰]]`로 임베드 중)\n- 새 봇 추가 시 기존 파일에 섹션만 append, 구조 ",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_telegram_bot_template.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-05-11T07:30:51Z",
+  "source": "~/.claude/",
+  "purpose": "Pre-Mistake-Prevention-Control-Plane backup",
+  "file_count": 93,
+  "checksums": {
+    "settings.json": "220c1c1de4b9c7d06425a28960ab90afc1442c12820f6f29722771cb299da94c",
+    "agents/": "a983babe774bbaa66835773ac396a2508f8fc0f719d54f55cd8f9b1696a4bf6c",
+    "rules/": "6e419bb61f3811ce787cc735f26bdbe4a33c8e372a28df2eaa54e86e6d159326",
+    "hooks/": "b64aaac978701e3442fbf2162bb69c7b3197339d4672e8f87ac861d1f02ac918"
+  }
+}

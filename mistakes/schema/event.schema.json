@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MistakeEvent",
+  "type": "object",
+  "required": ["ts", "session_id", "pattern_id", "source", "severity", "surface", "outcome"],
+  "properties": {
+    "ts": {"type": "string", "format": "date-time"},
+    "session_id": {"type": "string"},
+    "project_hash": {"type": "string"},
+    "pattern_id": {"type": "string"},
+    "source": {"type": "string"},
+    "phase": {"type": "string"},
+    "severity": {"type": "string", "enum": ["P0", "P1", "P2"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "surface": {"type": "string"},
+    "file": {"type": "string"},
+    "tool_input_summary": {"type": "string"},
+    "outcome": {"type": "string", "enum": ["blocked", "warned", "observed", "escaped"]},
+    "resolution": {"type": "string"},
+    "agent": {"type": "string"}
+  }
+}

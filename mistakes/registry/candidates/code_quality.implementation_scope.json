@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.implementation_scope",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "User directive — only implement what is explicitly instructed, no autonomous additions or phase pipeline",
+  "failure_mode": "지시된 것만 구현, 자체적으로 추가하지 않음.\n\n- 사용자가 지시하는 문서/프롬프트에 대해서만 작업 수행\n- Phase 0~Deploy 파이프라인 자동 적용 금지 — 사용자가 직접 순서 지정\n- 문서는 Axograph_Docs 폴더에 순서대로 제공됨\n- references/ 참고하되 그대로 쓰지 말고 재작성, 참고 부분 주석 표시\n\n**Why:** 사용자가 구현 순서와 범위를 직접 컨트롤하겠다는 명시적 지시.\n**How to apply:** 매 세션 시작 시 사용자 지시 대기. 자체 판단으로 추가 작업 금지.",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "지시된 것만 구현, 자체적으로 추가하지 않음.\n\n- 사용자가 지시하는 문서/프롬프트에 대해서만 작업 수행\n- Phase 0~Deploy 파이프라인 자동 적용 금지 — 사용자가 직접 순서 지정\n- 문서는 Axograph_Docs 폴더에 순서대로 제공됨\n- references/ 참고하되 그대로 쓰지 말고 재작성, 참고 부분 주석 표시\n\n**Why:** 사용자가 구현 순서와 범위를 직접 컨트롤하겠다는 명시적 지시.\n**How to apply:** 매 세션 시작 시 사용자 지시 대기. 자체 판단으로 추가 작업 금지.",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-Secret-Project-MacBot/memory/feedback_implementation_scope.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

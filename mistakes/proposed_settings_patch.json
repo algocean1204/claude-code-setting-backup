@@ -1,0 +1,68 @@
+{
+  "_comment": "Phase 3 제안 — observe-only 훅. 사용자 승인 후 settings.json에 병합",
+  "_activation_status": "proposed — NOT active",
+  "_reserved_decisions": {
+    "SessionStart": "공식 지원 확인 필요 — Claude Code 공식 훅 타입에 SessionStart 없음. 미지원 시 launchd plist로 대체",
+    "SubagentStop": "공식 지원 확인 필요 — Claude Code 공식 훅 타입에 SubagentStop 없음. 미지원 시 Stop hook에서 대체 처리",
+    "PreToolUse_stdin_format": "기존 훅에서 확인된 형식: stdin으로 JSON 전달, 환경변수 CLAUDE_TOOL_ARG_* 개별 필드 접근 가능",
+    "PostToolUse_execution_order": "동일 matcher의 훅은 배열 순서대로 실행 — 기존 PostToolUse(Write|Edit) 뒤에 새 훅 추가"
+  },
+  "hooks_to_add": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mistake-pretool.sh",
+            "timeout": 2
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mistake-pretool.sh",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mistake-posttool.sh",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mistake-prompt-context.sh",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mistake-stop-gate.sh",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}

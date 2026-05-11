@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.template_check",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "Obsidian 볼트에 노트를 생성/추가할 때 📋 템플릿 폴더에서 맞는 템플릿이 있는지 먼저 확인",
+  "failure_mode": "Obsidian 볼트에 새 노트를 만들거나 기존 노트에 내용을 추가할 때, 반드시 `📋 템플릿/` 폴더를 먼저 확인하고 해당하는 템플릿이 있으면 그 형식에 맞춰 작성한다.\n\n**Why:** 사용자가 일관된 형식으로 노트를 관리하고 있음. 템플릿을 무시하고 자유 형식으로 작성하면 볼트 내 통일성이 깨짐.\n\n**How to apply:**\n1. 노트 생성/추가 요청 시 → 먼저 `📋 템플릿/` 폴더의 파일 목록 확인 (Glob)\n2. 해당하는 템플릿이 있으면 → 읽고 형식 맞춰 작성\n3. 해당하는 템플릿이 없으면 → 자유 형식으로 작성 (기존 노트 스타일 참고)\n4. 새로운 유형의 노트가 반복될 것 같으면 → 템플릿 생성 제안",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "Obsidian 볼트에 새 노트를 만들거나 기존 노트에 내용을 추가할 때, 반드시 `📋 템플릿/` 폴더를 먼저 확인하고 해당하는 템플릿이 있으면 그 형식에 맞춰 작성한다.\n\n**Why:** 사용자가 일관된 형식으로 노트를 관리하고 있음. 템플릿을 무시하고 자유 형식으로 작성하면 볼트 내 통일성이 깨짐.\n\n**How to apply:**\n1. 노트 생성/추가 요청 시 → 먼저 `📋 템플릿/` 폴더의 파일 목록 확인 (Glob)\n2. 해당하는 템플릿이 있으면 → 읽고 형식 맞춰 작성\n3. 해당하는 템플릿이 없으면 → 자유 형식으로 작성 (기존 노트 스타일 참고)\n4. 새로운 유형의 노트가 반복될 것 같으면 → 템플릿 생성 제안",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_template_check.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

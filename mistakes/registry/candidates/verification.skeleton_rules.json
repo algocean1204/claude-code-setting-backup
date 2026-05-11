@@ -1,0 +1,42 @@
+{
+  "id": "verification.skeleton_rules",
+  "category": "verification",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "Rules established during 5 rounds of skeleton design — signatures frozen, constants frozen, import paths frozen",
+  "failure_mode": "스켈레톤 설계 5라운드에서 확립된 불변 규칙:\n\n1. **시그니처 변경 금지** — 함수명, 파라미터, 리턴 타입은 확정됨. 다른 모듈이 참조 중.\n2. **데이터 상수 변경 금지** — FALLBACK_CHAIN, TRUST_LEVELS, EXECUTION_TOOLS 등 모든 dict/list 값은 설계된 그대로.\n3. **import 경로 변경 금지** — 패키지 구조 확정. 새 파일 추가는 가능하되 기존 경로 이동 금지.\n4. **SRP 200L 절대 준수** — 매 라운드 wc -l 검증 완료. 구현 시에도 유지.\n5. **Rust lib.rs 등록 필수** — 새 .rs 파일 추가 시 반드시 mod + pymodule 등록.\n6. **ADR 연속 번호** — 현재 ADR-204. 다음은 ADR-205부터.\n7. **스켈레톤 `...` / `todo!()` 외에 빈 함수 금지** — pass, return None 등 사용 안 함.\n8. **LeaderMainLoop은 int",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "스켈레톤 설계 5라운드에서 확립된 불변 규칙:\n\n1. **시그니처 변경 금지** — 함수명, 파라미터, 리턴 타입은 확정됨. 다른 모듈이 참조 중.\n2. **데이터 상수 변경 금지** — FALLBACK_CHAIN, TRUST_LEVELS, EXECUTION_TOOLS 등 모든 dict/list 값은 설계된 그대로.\n3. **import 경로 변경 금지** — 패키지 구조 확정. 새 파일 추가는 가능하되 기존 경로 이동 금지.\n4. **SRP 200L 절대 준수** — 매 라운드 wc -l 검증 완료. 구현 시에도 유지.\n5. **Rust lib.rs 등록 필수** — 새 .rs 파일 추가 시 반드시 mod + pymodule 등록.\n6. **ADR 연속 번호** — 현재 ADR-204. 다음은 ADR-205부터.\n7. **스켈레톤 `...` / `todo!()` 외에 빈 함수 금지** — pass, return None 등 사용 안 함.\n8. **LeaderMainLoop은 int",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-Secret-Project-MacBot/memory/feedback_skeleton_rules.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

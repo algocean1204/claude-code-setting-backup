@@ -1,0 +1,42 @@
+{
+  "id": "verification.inspection_protocol",
+  "category": "verification",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "Round 66부터 적용. 검사 리더가 기능 리스트 유지, 가상 데이터 E2E 추적, 보안 검사 통합.",
+  "failure_mode": "검사팀 리더는 전체 기능 리스트를 컨텍스트에 유지하고, 리스트 압축을 최소화한다.\n\n**Why:** 사용자가 검사 리더가 검사 항목 리스트를 원본 유지하고, 검사 완료 후에만 비우도록 요청했다. 컨텍스트 압축으로 리스트가 유실되면 검사 누락이 발생한다.\n\n**How to apply:**\n1. 검사 에이전트 프롬프트에 반드시 포함: \"KEEP THIS LIST IN YOUR CONTEXT AT ALL TIMES — do NOT summarize or abbreviate it\"\n2. 기능별 순차 검사 + 가상 데이터 4종(happy/edge/ambiguous/invalid)으로 E2E 추적\n3. 가상 데이터는 무조건 통과되는 것만이 아니라 애매한 데이터까지 포함\n4. 엔트리포인트→엔드포인트 전 경로 추적, 경로 참조/연결 오류 집중 확인\n5. 보안 검사(인증, 입력검증, 정보노출) 통합\n6. 검사 완료 시 리스트 비움",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "검사팀 리더는 전체 기능 리스트를 컨텍스트에 유지하고, 리스트 압축을 최소화한다.\n\n**Why:** 사용자가 검사 리더가 검사 항목 리스트를 원본 유지하고, 검사 완료 후에만 비우도록 요청했다. 컨텍스트 압축으로 리스트가 유실되면 검사 누락이 발생한다.\n\n**How to apply:**\n1. 검사 에이전트 프롬프트에 반드시 포함: \"KEEP THIS LIST IN YOUR CONTEXT AT ALL TIMES — do NOT summarize or abbreviate it\"\n2. 기능별 순차 검사 + 가상 데이터 4종(happy/edge/ambiguous/invalid)으로 E2E 추적\n3. 가상 데이터는 무조건 통과되는 것만이 아니라 애매한 데이터까지 포함\n4. 엔트리포인트→엔드포인트 전 경로 추적, 경로 참조/연결 오류 집중 확인\n5. 보안 검사(인증, 입력검증, 정보노출) 통합\n6. 검사 완료 시 리스트 비움",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Develop-Fold-Secret-Project-Stock_Trading/memory/feedback_inspection_protocol.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

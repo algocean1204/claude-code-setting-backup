@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.vault_convention",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "폴더 역할 분리, 템플릿 사용 규칙, 데이터뷰 쿼리 규칙. 코딩테스트 상세 규칙은 rules/coding-test/ 참조.",
+  "failure_mode": "## 폴더 역할 분리\n\n| 폴더 | 역할 | 비고 |\n|:---|:---|:---|\n| `📋 템플릿/` | 모든 템플릿 | 콘텐츠 폴더에 절대 템플릿 넣지 않음 |\n| `_system/` | Claude 설정, 작업로그, 기기 설정 가이드 | 대시보드 TOC에서 제외됨 |\n| `📥 inbox/` | 정리 대기 파일 | 정리 후 반드시 삭제 |\n\n## 템플릿 사용 규칙\n\n1. 노트 생성 시 `📋 템플릿/` 폴더에 해당 템플릿 있는지 먼저 확인\n2. 있으면 반드시 해당 형식 준수\n3. 없으면 콘텐츠 먼저 생성하고 패턴이 반복되면 템플릿으로 분리\n\n## 현재 등록된 템플릿\n\n| 파일 | 용도 |\n|:---|:---|\n| `📋 템플릿/코딩테스트 문제.md` | 코딩테스트 문제 노트 (시도별 코드 전체 수록, AI 코칭 포함) |\n| `📋 템플릿/코딩테스트 이론.md` | 코딩테스트 이론 노트 (코드 비교 섹션 포함) |\n| `📋 템플릿/HuggingFace 모델.md` | 모델 저장소 추가",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "## 폴더 역할 분리\n\n| 폴더 | 역할 | 비고 |\n|:---|:---|:---|\n| `📋 템플릿/` | 모든 템플릿 | 콘텐츠 폴더에 절대 템플릿 넣지 않음 |\n| `_system/` | Claude 설정, 작업로그, 기기 설정 가이드 | 대시보드 TOC에서 제외됨 |\n| `📥 inbox/` | 정리 대기 파일 | 정리 후 반드시 삭제 |\n\n## 템플릿 사용 규칙\n\n1. 노트 생성 시 `📋 템플릿/` 폴더에 해당 템플릿 있는지 먼저 확인\n2. 있으면 반드시 해당 형식 준수\n3. 없으면 콘텐츠 먼저 생성하고 패턴이 반복되면 템플릿으로 분리\n\n## 현재 등록된 템플릿\n\n| 파일 | 용도 |\n|:---|:---|\n| `📋 템플릿/코딩테스트 문제.md` | 코딩테스트 문제 노트 (시도별 코드 전체 수록, AI 코칭 포함) |\n| `📋 템플릿/코딩테스트 이론.md` | 코딩테스트 이론 노트 (코드 비교 섹션 포함) |\n| `📋 템플릿/HuggingFace 모델.md` | 모델 저장소 추가",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_vault_convention.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

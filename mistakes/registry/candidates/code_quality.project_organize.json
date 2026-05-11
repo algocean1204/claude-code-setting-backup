@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.project_organize",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "프로젝트 폴더 노트 작성 시 Claude는 추론·해석·창작 금지, 단순 분류만. 원본 보존은 회의록에만 적용",
+  "failure_mode": "프로젝트 폴더(`📚 지식베이스/프로젝트/`) 내 노트를 만들거나 업데이트할 때 Claude는 **단순 분류기**로만 동작한다. 추론·해석·창작 금지. `## 📥 원본 입력` 섹션은 **회의록에만** 유지(내 파트·회고록·메모는 원본 입력 불필요 — 2026-04-14 사용자 요청).\n\n**Why:** 2026-04-14 사용자가 개인 프로젝트 기록 체계 구축하면서 명시적으로 요청. \"클로드가 스스로 추론, 생각 하지 않도록\" 강조. 일관성과 원본 신뢰성이 최우선.\n**How to apply:** 프로젝트 노트 작성·수정 시 반드시 `_system/프로젝트 정리 규칙.md` 먼저 읽고 10대 규칙 준수. 애매하면 AskUserQuestion으로 옵션 제시. 폴더 라우팅(내 파트/회고록/회의/메모)도 매번 사용자에게 물어본다. 상대 날짜(\"어제\") 나오면 절대 날짜 확인 후 기재.\n\n## 구조 요약\n- 폴더: `📚 지식베이스/프로젝트/[프로젝트명]/{내 파트,회고록,회의,메모,🗑️ 원본",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "프로젝트 폴더(`📚 지식베이스/프로젝트/`) 내 노트를 만들거나 업데이트할 때 Claude는 **단순 분류기**로만 동작한다. 추론·해석·창작 금지. `## 📥 원본 입력` 섹션은 **회의록에만** 유지(내 파트·회고록·메모는 원본 입력 불필요 — 2026-04-14 사용자 요청).\n\n**Why:** 2026-04-14 사용자가 개인 프로젝트 기록 체계 구축하면서 명시적으로 요청. \"클로드가 스스로 추론, 생각 하지 않도록\" 강조. 일관성과 원본 신뢰성이 최우선.\n**How to apply:** 프로젝트 노트 작성·수정 시 반드시 `_system/프로젝트 정리 규칙.md` 먼저 읽고 10대 규칙 준수. 애매하면 AskUserQuestion으로 옵션 제시. 폴더 라우팅(내 파트/회고록/회의/메모)도 매번 사용자에게 물어본다. 상대 날짜(\"어제\") 나오면 절대 날짜 확인 후 기재.\n\n## 구조 요약\n- 폴더: `📚 지식베이스/프로젝트/[프로젝트명]/{내 파트,회고록,회의,메모,🗑️ 원본",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_project_organize.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}

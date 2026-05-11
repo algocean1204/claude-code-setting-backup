@@ -1,0 +1,42 @@
+{
+  "id": "code_quality.comparison_layout",
+  "category": "code_quality",
+  "severity": "P2",
+  "status": "candidate",
+  "title": "비교가 필요한 콘텐츠는 항상 좌우(left-right) 레이아웃으로 정리, flex div 사용",
+  "failure_mode": "비교 콘텐츠(코드 비교, 알고리즘 비교, 모델 비교 등)는 항상 좌우로 나란히 보이도록 정리한다.\n\n**Why:** 상하로 나열하면 스크롤이 길어지고 대조가 어려움. 좌우 배치가 차이점을 한눈에 파악하기 좋음.\n\n**How to apply:**\n- Obsidian에서는 `<div style=\"display:flex; gap:12px;\">` + `<div style=\"flex:1;\">` 사용\n- 비교 아래에는 반드시 **핵심 차이 요약 테이블** 추가\n- 이 규칙은 _system/CLAUDE.md에도 명시되어 있음",
+  "detection": {
+    "surfaces": [],
+    "signals": [],
+    "signal_type": "pending_review",
+    "precision": "unknown",
+    "cost": "unknown"
+  },
+  "prevention": {
+    "action": "observe",
+    "message": "imported from feedback memory — needs curation"
+  },
+  "solution": {
+    "canonical_fix": "비교 콘텐츠(코드 비교, 알고리즘 비교, 모델 비교 등)는 항상 좌우로 나란히 보이도록 정리한다.\n\n**Why:** 상하로 나열하면 스크롤이 길어지고 대조가 어려움. 좌우 배치가 차이점을 한눈에 파악하기 좋음.\n\n**How to apply:**\n- Obsidian에서는 `<div style=\"display:flex; gap:12px;\">` + `<div style=\"flex:1;\">` 사용\n- 비교 아래에는 반드시 **핵심 차이 요약 테이블** 추가\n- 이 규칙은 _system/CLAUDE.md에도 명시되어 있음",
+    "verification": []
+  },
+  "stats": {
+    "occurrences_30d": 0,
+    "distinct_sessions_30d": 0,
+    "last_seen": null,
+    "false_positive_rate": null,
+    "escape_rate": null,
+    "prevented_count": 0
+  },
+  "promotion": {
+    "state": "candidate",
+    "target": "pending_review",
+    "reason": "자동 import — 큐레이션 팀 리뷰 필요"
+  },
+  "provenance": {
+    "original_memory": "projects/-Users-kimtaekyu-Documents-Obsidian-Vault/memory/feedback_comparison_layout.md",
+    "created": "2026-05-11",
+    "last_modified": "2026-05-11",
+    "created_by": "import_feedback_memories.py"
+  }
+}
