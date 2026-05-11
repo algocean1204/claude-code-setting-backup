@@ -3,6 +3,7 @@
   "title": "VerificationDirective",
   "type": "object",
   "required": ["directive_id", "goal_summary", "scope", "risk_tier", "verifier_chain", "changed_files", "max_runtime_sec", "created_at", "status", "session_id"],
+  "additionalProperties": false,
   "properties": {
     "directive_id": {
       "type": "string",
@@ -15,6 +16,7 @@
     "scope": {
       "type": "object",
       "required": ["files_to_check", "test_commands", "acceptance_criteria"],
+      "additionalProperties": false,
       "properties": {
         "files_to_check": {
           "type": "array",
@@ -43,6 +45,7 @@
       "items": {
         "type": "object",
         "required": ["check_id", "check_type", "command"],
+        "additionalProperties": false,
         "properties": {
           "check_id": {
             "type": "string",

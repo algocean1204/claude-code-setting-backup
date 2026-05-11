@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""검증 증거 기록기 — 발견 사항을 분류하고 자동 수리 루프 상태를 추적한다.
-
-observe-only 모드: 기록과 분류만 수행, 강제 수정 없음.
-동일 finding_id가 2회 이상 등장하면 BLOCKED으로 표시한다.
-"""
+"""검증 증거 기록기 — 발견 사항 분류 + 자동 수리 루프 상태 추적 (observe-only)."""
 from __future__ import annotations
 
 import argparse
@@ -48,6 +44,18 @@ def classify_finding(description: str) -> str:
     return "AUTO_FIXABLE"
 
 
+def _assign_severity(description: str) -> str:
+    """키워드 기반 심각도 결정: error/exception/traceback→P0, warning→P1, fail→P2."""
+    lower = description.lower()
+    if any(kw in lower for kw in ("error", "exception", "traceback", "오류")):
+        return "P0"
+    if any(kw in lower for kw in ("warning", "경고")):
+        return "P1"
+    if any(kw in lower for kw in ("fail", "실패")):
+        return "P2"
+    return "P1"
+
+
 def parse_findings(raw_output: str, passed: bool) -> list[dict]:
     """원문 출력에서 오류·경고 행을 발견 사항으로 추출한다."""
     if passed:
@@ -62,6 +70,7 @@ def parse_findings(raw_output: str, passed: bool) -> list[dict]:
             findings.append({
                 "finding_id": str(uuid.uuid4())[:8],
                 "description": line[:300],
+                "severity": _assign_severity(line),
                 "classification": classify_finding(line),
             })
     return findings
@@ -77,8 +86,8 @@ def validate_evidence(evidence: dict) -> list[str]:
         errors.append(f"유효하지 않은 check_type: {evidence['check_type']}")
     if evidence.get("executor") and evidence["executor"] not in VALID_EXECUTORS:
         errors.append(f"유효하지 않은 executor: {evidence['executor']}")
-    if not evidence.get("raw_output", "").strip() and evidence.get("passed"):
-        errors.append("raw_output 없이 passed=True는 수상함 — 증거 제공 필요")
+    if not evidence.get("raw_output", "").strip() and evidence.get("pass"):
+        errors.append("raw_output 없이 pass=True는 수상함 — 증거 제공 필요")
     return errors
 
 
@@ -137,12 +146,6 @@ def record(evidence: dict) -> Path:
 
 def main() -> None:
     """CLI 진입점."""
-    if len(sys.argv) < 2:
-        print("사용법: record_verification_evidence.py --directive-id ID --check-id ID "
-              "--check-type TYPE --executor EXEC --raw-output TEXT (--pass|--fail)",
-              file=sys.stderr)
-        sys.exit(1)
-
     p = argparse.ArgumentParser(description="검증 증거를 기록하고 발견 사항을 분류한다.")
     p.add_argument("--directive-id", required=True)
     p.add_argument("--check-id", required=True)
@@ -154,17 +157,13 @@ def main() -> None:
     g.add_argument("--fail", dest="passed", action="store_false")
     args = p.parse_args()
 
+    now = datetime.now(timezone.utc).isoformat()
     evidence: dict = {
-        "evidence_id": str(uuid.uuid4()),
-        "directive_id": args.directive_id,
-        "check_id": args.check_id,
-        "check_type": args.check_type,
-        "executor": args.executor,
-        "raw_output": args.raw_output,
-        "raw_output_hash": hash_output(args.raw_output),
-        "passed": args.passed,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "findings": [],
+        "evidence_id": str(uuid.uuid4()), "directive_id": args.directive_id,
+        "check_id": args.check_id, "check_type": args.check_type,
+        "executor": args.executor, "raw_output": args.raw_output,
+        "raw_output_hash": hash_output(args.raw_output), "pass": args.passed,
+        "timestamp": now, "duration_ms": 0, "findings": [],
     }
 
     errors = validate_evidence(evidence)
@@ -174,17 +173,20 @@ def main() -> None:
         sys.exit(1)
 
     findings = parse_findings(args.raw_output, args.passed)
+    # 스키마 외 필드 오염 방지: status는 별도 딕셔너리로 추적한다
+    finding_statuses: dict[str, str] = {}
     for f in findings:
-        f["status"] = "BLOCKED" if check_repair_history(args.directive_id, f["finding_id"]) else "OPEN"
+        fid = f["finding_id"]
+        finding_statuses[fid] = "BLOCKED" if check_repair_history(args.directive_id, fid) else "OPEN"
     evidence["findings"] = findings
 
     saved = record(evidence)
-    blocked = sum(1 for f in findings if f["status"] == "BLOCKED")
+    blocked = sum(1 for s in finding_statuses.values() if s == "BLOCKED")
     print(json.dumps({
         "evidence_id": evidence["evidence_id"],
         "directive_id": args.directive_id,
         "check_id": args.check_id,
-        "passed": args.passed,
+        "pass": args.passed,
         "finding_count": len(findings),
         "blocked_count": blocked,
         "saved_path": str(saved),

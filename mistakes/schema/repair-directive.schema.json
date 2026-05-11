@@ -3,6 +3,7 @@
   "title": "RepairDirective",
   "type": "object",
   "required": ["repair_id", "directive_id", "finding_id", "repair_type", "target_files", "write_scope", "risk_tier", "proposed_fix", "expected_verification", "rollback_plan", "auto_fix_allowed", "attempt_number", "status", "created_at"],
+  "additionalProperties": false,
   "properties": {
     "repair_id": {
       "type": "string",

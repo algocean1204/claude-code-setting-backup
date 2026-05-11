@@ -73,7 +73,6 @@ VerificationDirective는 "검증 지시", VerificationEvidence는 "검증 증거
 ---
 
 ## Part B: 상태 머신
-
 ```
 EXECUTE
   │
@@ -184,16 +183,18 @@ record_event(
 ```
 ~/.claude/mistakes/
   schema/
-    verification-directive.json    # VerificationDirective JSON Schema
-    verification-evidence.json     # VerificationEvidence JSON Schema
-    repair-directive.json          # RepairDirective JSON Schema
+    verification-directive.schema.json  # VerificationDirective JSON Schema
+    verification-evidence.schema.json   # VerificationEvidence JSON Schema
+    repair-directive.schema.json        # RepairDirective JSON Schema
   bin/
-    record_evidence.py             # VerificationEvidence 기록 (recorder 래퍼 포함)
-    run_verification.py            # verifier_chain DAG 실행 엔진
-    repair_loop.py                 # Goal Closure Auto-Repair 상태 머신
-    goal_report.py                 # goal 중심 최종 보고 생성
-  directives/
-    *.jsonl                        # 세션별 VerificationDirective 로그
-  evidence/
-    *.jsonl                        # VerificationEvidence 축적 (시스템 생성)
+    create_verification_directive.py    # VerificationDirective JSON 생성기
+    record_verification_evidence.py     # VerificationEvidence 기록 (recorder 래퍼 포함)
+  registry/
+    directives/
+      *.json                            # 세션별 VerificationDirective 로그
+    evidence/
+      *.json                            # VerificationEvidence 축적 (시스템 생성)
+    queue/
+      unresolved/
+        *.json                          # 미해결 발견 사항 큐
 ```

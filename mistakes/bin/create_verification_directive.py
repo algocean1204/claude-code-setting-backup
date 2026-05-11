@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import uuid
@@ -75,7 +76,7 @@ def get_changed_files() -> list[str]:
 
 
 def build_verifier_chain(checks: list[dict]) -> list[dict]:
-    """검증 단계를 DAG로 구성한다 (syntax → lint → test → integration)."""
+    """검증 단계를 DAG로 구성한다 (syntax -> lint -> test -> integration)."""
     layer_ids: dict[str, list[str]] = {lay: [] for lay in DAG_ORDER}
     for c in checks:
         lay = c.get("layer", "syntax")
@@ -89,26 +90,58 @@ def build_verifier_chain(checks: list[dict]) -> list[dict]:
         deps: list[str] = []
         for prev in DAG_ORDER[:idx]:
             deps.extend(layer_ids.get(prev, []))
-        chain.append({**c, "depends_on": deps})
+        # 스키마는 "check_type"을 요구하므로 "layer" 대신 사용
+        entry = {
+            "check_id": c["check_id"],
+            "check_type": lay,
+            "command": c["command"],
+            "depends_on": deps,
+        }
+        chain.append(entry)
 
-    chain.sort(key=lambda c: (DAG_ORDER.index(c["layer"]) if c["layer"] in DAG_ORDER else 99,
-                               c["check_id"]))
+    chain.sort(key=lambda e: (
+        DAG_ORDER.index(e["check_type"]) if e["check_type"] in DAG_ORDER else 99,
+        e["check_id"],
+    ))
     return chain
 
 
+def _extract_test_commands(chain: list[dict]) -> list[str]:
+    """검증 체인에서 테스트·린트 명령어를 추출한다."""
+    return [step["command"] for step in chain if step.get("command")]
+
+
+def _generate_acceptance_criteria(goal: str) -> list[str]:
+    """목표 문자열로부터 합격 조건 목록을 생성한다."""
+    return [
+        f"목표 달성: {goal}",
+        "모든 verifier_chain 단계 통과",
+        "BLOCKED 상태의 finding 없음",
+    ]
+
+
 def create_directive(goal: str, files: list[str], risk_tier: str) -> dict:
-    """VerificationDirective JSON을 생성한다."""
+    """VerificationDirective JSON을 생성한다 (스키마 준수)."""
     changed = get_changed_files()
     all_files = list(files) + [f for f in changed if f not in files]
     checks = detect_file_checks(all_files)
+    chain = build_verifier_chain(checks)
+    session_id = os.environ.get("CLAUDE_SESSION_ID") or str(uuid.uuid4())
     return {
         "directive_id": str(uuid.uuid4()),
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "goal": goal,
+        "goal_summary": goal,
+        "scope": {
+            "files_to_check": all_files,
+            "test_commands": _extract_test_commands(chain),
+            "acceptance_criteria": _generate_acceptance_criteria(goal),
+        },
         "risk_tier": risk_tier,
-        "target_files": files,
-        "changed_files_from_git": changed,
-        "verifier_chain": build_verifier_chain(checks),
+        "verifier_chain": chain,
+        "changed_files": changed,
+        "max_runtime_sec": 120,
+        "status": "pending",
+        "session_id": session_id,
     }
 
 

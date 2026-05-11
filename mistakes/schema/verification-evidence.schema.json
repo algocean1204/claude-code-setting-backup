@@ -3,6 +3,7 @@
   "title": "VerificationEvidence",
   "type": "object",
   "required": ["evidence_id", "directive_id", "check_id", "check_type", "executor", "raw_output", "raw_output_hash", "pass", "findings", "timestamp", "duration_ms"],
+  "additionalProperties": false,
   "properties": {
     "evidence_id": {
       "type": "string",
@@ -43,6 +44,7 @@
       "items": {
         "type": "object",
         "required": ["finding_id", "description", "severity", "classification"],
+        "additionalProperties": false,
         "properties": {
           "finding_id": {
             "type": "string",
