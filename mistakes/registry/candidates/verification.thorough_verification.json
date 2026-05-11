@@ -10,7 +10,8 @@
     "signals": [],
     "signal_type": "pending_review",
     "precision": "unknown",
-    "cost": "unknown"
+    "cost": "unknown",
+    "related_directive_system": "verification-directive-contract"
   },
   "prevention": {
     "action": "observe",
@@ -18,7 +19,9 @@
   },
   "solution": {
     "canonical_fix": "순차작업 시 검증을 확실하게, 치밀하게, 다각도로 수행.\n\n- 설계 관련 작업은 특히 치밀한 다각도 검증 필수\n- 메모리 날아가거나 작업 덜하는 문제 절대 없어야 함\n- 각 Phase 완료 시 코덱스 검증 체크리스트 전항목 자체 확인\n- 컨텍스트 압축으로 작업 내용 유실되지 않도록 핵심 정보 항상 보존\n\n**Why:** 사용자가 순차적으로 중요한 설계 작업을 진행 중이며, 불완전한 구현이나 검증 누락은 후속 Phase에 치명적 영향.\n**How to apply:** 매 구현 완료 시 체크리스트 전항목 검증 에이전트 반드시 스폰. 검증 실패 시 즉시 수정 후 재검증.",
-    "verification": []
+    "verification": [
+      "VerificationDirective 생성 및 evidence 기록 확인"
+    ]
   },
   "stats": {
     "occurrences_30d": 0,

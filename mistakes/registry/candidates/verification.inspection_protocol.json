@@ -10,7 +10,8 @@
     "signals": [],
     "signal_type": "pending_review",
     "precision": "unknown",
-    "cost": "unknown"
+    "cost": "unknown",
+    "related_directive_system": "verification-directive-contract"
   },
   "prevention": {
     "action": "observe",
@@ -18,7 +19,9 @@
   },
   "solution": {
     "canonical_fix": "검사팀 리더는 전체 기능 리스트를 컨텍스트에 유지하고, 리스트 압축을 최소화한다.\n\n**Why:** 사용자가 검사 리더가 검사 항목 리스트를 원본 유지하고, 검사 완료 후에만 비우도록 요청했다. 컨텍스트 압축으로 리스트가 유실되면 검사 누락이 발생한다.\n\n**How to apply:**\n1. 검사 에이전트 프롬프트에 반드시 포함: \"KEEP THIS LIST IN YOUR CONTEXT AT ALL TIMES — do NOT summarize or abbreviate it\"\n2. 기능별 순차 검사 + 가상 데이터 4종(happy/edge/ambiguous/invalid)으로 E2E 추적\n3. 가상 데이터는 무조건 통과되는 것만이 아니라 애매한 데이터까지 포함\n4. 엔트리포인트→엔드포인트 전 경로 추적, 경로 참조/연결 오류 집중 확인\n5. 보안 검사(인증, 입력검증, 정보노출) 통합\n6. 검사 완료 시 리스트 비움",
-    "verification": []
+    "verification": [
+      "VerificationDirective 생성 및 evidence 기록 확인"
+    ]
   },
   "stats": {
     "occurrences_30d": 0,
